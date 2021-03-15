@@ -30,10 +30,10 @@ namespace XMLReader_Add_In
         private void InitializeComponent()
         {
             System.Windows.Forms.Label XMLDescription;
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Root");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XMLBrowserForm));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.openXML = new System.Windows.Forms.Button();
+            this.XMLNodeValueLabel = new System.Windows.Forms.Label();
             XMLDescription = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -55,29 +55,36 @@ namespace XMLReader_Add_In
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView1.Location = new System.Drawing.Point(15, 30);
             this.treeView1.Name = "treeView1";
-            //treeNode1.Name = "XML_Tree";
-            //treeNode1.Text = "Root";
-            //this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            //treeNode1});
-            this.treeView1.Size = new System.Drawing.Size(565, 349);
+            this.treeView1.Size = new System.Drawing.Size(579, 349);
             this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // openXML
             // 
             this.openXML.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.openXML.Location = new System.Drawing.Point(586, 30);
+            this.openXML.Location = new System.Drawing.Point(600, 30);
             this.openXML.Name = "openXML";
-            this.openXML.Size = new System.Drawing.Size(75, 23);
+            this.openXML.Size = new System.Drawing.Size(158, 23);
             this.openXML.TabIndex = 1;
             this.openXML.Text = "Open XML ...";
             this.openXML.UseVisualStyleBackColor = true;
+            // 
+            // XMLNodeValueLabel
+            // 
+            this.XMLNodeValueLabel.AutoSize = true;
+            this.XMLNodeValueLabel.Location = new System.Drawing.Point(600, 56);
+            this.XMLNodeValueLabel.Name = "XMLNodeValueLabel";
+            this.XMLNodeValueLabel.Size = new System.Drawing.Size(35, 13);
+            this.XMLNodeValueLabel.TabIndex = 3;
+            this.XMLNodeValueLabel.Text = "label1";
             // 
             // XMLBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(673, 418);
+            this.ClientSize = new System.Drawing.Size(770, 418);
+            this.Controls.Add(this.XMLNodeValueLabel);
             this.Controls.Add(XMLDescription);
             this.Controls.Add(this.openXML);
             this.Controls.Add(this.treeView1);
@@ -93,5 +100,6 @@ namespace XMLReader_Add_In
 
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Button openXML;
+        private System.Windows.Forms.Label XMLNodeValueLabel;
     }
 }

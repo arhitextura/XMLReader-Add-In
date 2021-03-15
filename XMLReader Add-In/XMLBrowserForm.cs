@@ -59,5 +59,22 @@ namespace XMLReader_Add_In
             InitializeComponent();
             initTreeView();
         }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            switch ((e.Action))
+            {
+                case TreeViewAction.ByMouse:
+                    
+                    XElement selectedNodeTagElement = e.Node.Tag as XElement;
+                    string s = string.Empty;
+                    foreach(XElement el in selectedNodeTagElement.Ancestors())
+                    {
+                        s += el.Name.ToString() + "/";
+                    }
+                    XMLNodeValueLabel.Text = s;
+                    break;
+            }
+        }
     }
 }
