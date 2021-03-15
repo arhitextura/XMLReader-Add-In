@@ -211,10 +211,13 @@
     <None Include="XMLReader Add-In_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resoruces\png\add_insert_plus_icon_178023.png" />
+    <None Include="resources\png\add_insert_plus_icon_178023.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resoruces\png\settings-cogwheel-button_icon-icons.com_72559.png" />
+    <None Include="resources\png\settings-cogwheel-button_icon-icons.com_72559.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -224,10 +227,11 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>XMLReader Add-In_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>FC4268FFB6BB3E5909ED04448D4D81465A909310</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>AC3AE857D62889E7175B70F1F9120BB6619F9476</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

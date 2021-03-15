@@ -119,12 +119,12 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="add_insert_plus_icon_178023" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resoruces\png\add_insert_plus_icon_178023.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\resources\png\add_insert_plus_icon_178023.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="iconfinder_document_file_paper_page-26_2850884" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resoruces\png\iconfinder_document_file_paper_page-26_2850884.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\resources\png\iconfinder_document_file_paper_page-26_2850884.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="settings-cogwheel-button_icon-icons.com_72559" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resoruces\png\settings-cogwheel-button_icon-icons.com_72559.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\resources\png\settings-cogwheel-button_icon-icons.com_72559.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
