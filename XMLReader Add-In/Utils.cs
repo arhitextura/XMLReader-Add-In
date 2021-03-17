@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WordInterop = Microsoft.Office.Interop.Word;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace XMLReader_Add_In
 {
@@ -17,6 +18,19 @@ namespace XMLReader_Add_In
             msgBox = MessageBox.Show(message);
         }
 
-       
+       public static string ReturnXPath(XElement el)
+        {
+            
+            string pathString = "/";
+            List<XElement> ancestorsList = el.Ancestors().ToList();
+            ancestorsList.Reverse();
+            
+            foreach(XElement ancestor in ancestorsList)
+            {
+                pathString += ancestor.Name.ToString() + "/";
+            }
+            pathString += el.Name.ToString();
+            return pathString;
+        }
     }
 }

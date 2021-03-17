@@ -12,6 +12,7 @@ namespace XMLReader_Add_In
         {
             XDocument XMLFileRoot = Globals.ThisAddIn.XML_ProjectInfo;
             XElement XMLRoot = XMLFileRoot.Root;
+            
             //DialogResult msgBox;
             //msgBox = MessageBox.Show(XMLFileRoot.ToString());
 
@@ -50,6 +51,7 @@ namespace XMLReader_Add_In
                 
                 treeNode.Nodes.Add(childTreeNode);
                 BuildNodes(childTreeNode, child);
+                
             }
         }
 
@@ -73,6 +75,7 @@ namespace XMLReader_Add_In
                         s += el.Name.ToString() + "/";
                     }
                     XMLNodeValueLabel.Text = s;
+                    System.Diagnostics.Debug.Print(Utils.ReturnXPath(e.Node.Tag as XElement));
                     break;
             }
         }

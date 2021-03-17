@@ -10,6 +10,7 @@ using Microsoft.Office.Tools.Word.Controls;
 
 
 
+
 namespace XMLReader_Add_In
 {
     public partial class ThisAddIn
@@ -60,12 +61,22 @@ namespace XMLReader_Add_In
             Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString);
             DialogResult msgBox;
             msgBox = MessageBox.Show(currentDocument.CustomXMLParts.SelectByNamespace("Employees").ToString());
-            
         }
+
+        #region Event handling functions
+        private void setCurrentDocument(Word.Document doc)
+        {
+            currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
+        }
+        #endregion
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-           
+            this.Application.DocumentOpen +=
+            new Word.ApplicationEvents4_DocumentOpenEventHandler(setCurrentDocument);
+
+            ((Word.ApplicationEvents4_Event)this.Application).NewDocument +=
+                new Word.ApplicationEvents4_NewDocumentEventHandler(setCurrentDocument);
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
