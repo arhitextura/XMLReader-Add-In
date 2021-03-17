@@ -75,6 +75,7 @@ namespace XMLReader_Add_In
                         s += el.Name.ToString() + "/";
                     }
                     XMLNodeValueLabel.Text = s;
+
                     System.Diagnostics.Debug.Print(Utils.ReturnXPath(e.Node.Tag as XElement));
                     break;
             }
