@@ -32,6 +32,7 @@ namespace XMLReader_Add_In
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XMLBrowserForm));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.XMLNodeValueLabel = new System.Windows.Forms.Label();
+            this.InsertContentControlButton = new System.Windows.Forms.Button();
             XMLDescription = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -68,12 +69,24 @@ namespace XMLReader_Add_In
             this.XMLNodeValueLabel.TabIndex = 3;
             this.XMLNodeValueLabel.Text = "Valoare preluata din XML";
             // 
+            // InsertContentControlButton
+            // 
+            this.InsertContentControlButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.InsertContentControlButton.Location = new System.Drawing.Point(528, 52);
+            this.InsertContentControlButton.Name = "InsertContentControlButton";
+            this.InsertContentControlButton.Size = new System.Drawing.Size(230, 23);
+            this.InsertContentControlButton.TabIndex = 4;
+            this.InsertContentControlButton.Text = "Insert Content Control";
+            this.InsertContentControlButton.UseVisualStyleBackColor = true;
+            this.InsertContentControlButton.Click += new System.EventHandler(this.InsertContentControlButton_Click);
+            // 
             // XMLBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(770, 418);
+            this.Controls.Add(this.InsertContentControlButton);
             this.Controls.Add(this.XMLNodeValueLabel);
             this.Controls.Add(XMLDescription);
             this.Controls.Add(this.treeView1);
@@ -89,5 +102,6 @@ namespace XMLReader_Add_In
 
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Label XMLNodeValueLabel;
+        private System.Windows.Forms.Button InsertContentControlButton;
     }
 }

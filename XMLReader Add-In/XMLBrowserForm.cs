@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
+using interopWord = Microsoft.Office.Interop.Word;
+using Microsoft.Office.Tools.Word;
 
 namespace XMLReader_Add_In
 {
     public partial class XMLBrowserForm : Form
     {
+        private Microsoft.Office.Tools.Word.PlainTextContentControl plainTextControl1;
         
         private void initTreeView()
         {
@@ -25,6 +28,25 @@ namespace XMLReader_Add_In
             {
                 BuildNodes(RootNode, rootChild);
             }
+        }
+
+        /*Gets all the content controls in the currentDocument 
+         */
+        private void GetAllControls()
+        {
+            //TODO Fix here
+            ContentControl content;
+            content.Type = interopWord.WdContentControlType.wdContentControlText;
+            
+            Globals.ThisAddIn.currentDocument.Select();
+            Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
+            interopWord.ContentControls ccList = Globals.ThisAddIn.currentDocument.ContentControls;
+            foreach (interopWord.ContentControl cc in ccList)
+            {
+                System.Diagnostics.Debug.WriteLine(cc.Title);
+            }
+
+
         }
 
         private void BuildNodes(TreeNode treeNode, XElement element)
@@ -64,6 +86,7 @@ namespace XMLReader_Add_In
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            //TODO Add selection for all content controls in document
             switch ((e.Action))
             {
                 case TreeViewAction.ByMouse:
@@ -76,9 +99,17 @@ namespace XMLReader_Add_In
                     }
                     XMLNodeValueLabel.Text = s;
 
-                    System.Diagnostics.Debug.Print(Utils.ReturnXPath(e.Node.Tag as XElement));
+                    //System.Diagnostics.Debug.Print(Utils.ReturnXPath(e.Node.Tag as XElement));
                     break;
             }
+        }
+
+        private void InsertContentControlButton_Click(object sender, System.EventArgs e)
+        {
+            Globals.ThisAddIn.currentDocument.Select();
+            Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
+            //plainTextControl1 = extendedDocument.Controls.AddPlainTextContentControl("adada");
+            GetAllControls();
         }
     }
 }

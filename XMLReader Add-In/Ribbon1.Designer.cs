@@ -39,8 +39,9 @@ namespace XMLReader_Add_In
             this.XMLAddIn = this.Factory.CreateRibbonGroup();
             this.group1 = this.Factory.CreateRibbonGroup();
             this.openXMLFileButton = this.Factory.CreateRibbonButton();
-            this.settingsButton = this.Factory.CreateRibbonButton();
             this.AddCustomXMLButton = this.Factory.CreateRibbonButton();
+            this.settingsButton = this.Factory.CreateRibbonButton();
+            this.LoadContentButton = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.XMLAddIn.SuspendLayout();
             this.group1.SuspendLayout();
@@ -63,6 +64,7 @@ namespace XMLReader_Add_In
             // 
             // group1
             // 
+            this.group1.Items.Add(this.LoadContentButton);
             this.group1.Items.Add(this.settingsButton);
             this.group1.Label = "Customize";
             this.group1.Name = "group1";
@@ -76,14 +78,6 @@ namespace XMLReader_Add_In
             this.openXMLFileButton.ShowImage = true;
             this.openXMLFileButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
-            // settingsButton
-            // 
-            this.settingsButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.settingsButton.Image = global::XMLReader_Add_In.Properties.Resources.settings_cogwheel_button_icon_icons_com_72559;
-            this.settingsButton.Label = "Settings";
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.ShowImage = true;
-            // 
             // AddCustomXMLButton
             // 
             this.AddCustomXMLButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -92,6 +86,20 @@ namespace XMLReader_Add_In
             this.AddCustomXMLButton.Name = "AddCustomXMLButton";
             this.AddCustomXMLButton.ShowImage = true;
             this.AddCustomXMLButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddCustomXMLButton_Click);
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.settingsButton.Image = global::XMLReader_Add_In.Properties.Resources.settings_cogwheel_button_icon_icons_com_72559;
+            this.settingsButton.Label = "Settings";
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.ShowImage = true;
+            // 
+            // LoadContentButton
+            // 
+            this.LoadContentButton.Label = "List content controls";
+            this.LoadContentButton.Name = "LoadContentButton";
+            this.LoadContentButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LoadContentButton_Click);
             // 
             // Ribbon1
             // 
@@ -117,6 +125,7 @@ namespace XMLReader_Add_In
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton AddCustomXMLButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton settingsButton;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton LoadContentButton;
     }
 
     partial class ThisRibbonCollection

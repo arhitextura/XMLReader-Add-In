@@ -18,7 +18,7 @@ namespace XMLReader_Add_In
         private System.Windows.Forms.Form XMLBrowserForm;
 
         #region GLOBALS
-        Microsoft.Office.Interop.Word.Document currentDocument;
+        public Word.Document currentDocument;
         private string XMLFilePath = string.Empty;
         private XDocument _XML_ProjectInfo;
         public XDocument XML_ProjectInfo { get => _XML_ProjectInfo; set => _XML_ProjectInfo = value; }
@@ -48,7 +48,7 @@ namespace XMLReader_Add_In
 
         internal void addCustomXML ()
         {
-            currentDocument = Globals.ThisAddIn.Application.Application.ActiveDocument;
+            //currentDocument = Globals.ThisAddIn.Application.Application.ActiveDocument;
             string xmlString =
             "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
                 "<employees xmlns=\"Employees\">" +
