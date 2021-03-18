@@ -30,20 +30,18 @@ namespace XMLReader_Add_In
             }
         }
 
-        /*Gets all the content controls in the currentDocument 
-         */
+        ///<summary>
+        ///Gets all the content controls in the active documet
+        /// </summary>
+        
         private void GetAllControls()
         {
-            //TODO Fix here
-            ContentControl content;
-            content.Type = interopWord.WdContentControlType.wdContentControlText;
             
-            Globals.ThisAddIn.currentDocument.Select();
-            Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
             interopWord.ContentControls ccList = Globals.ThisAddIn.currentDocument.ContentControls;
             foreach (interopWord.ContentControl cc in ccList)
             {
-                System.Diagnostics.Debug.WriteLine(cc.Title);
+                System.Diagnostics.Debug.WriteLine(cc.Type);
+                
             }
 
 
