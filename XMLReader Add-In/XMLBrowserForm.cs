@@ -36,8 +36,7 @@ namespace XMLReader_Add_In
         {
             //TODO Fix here
             ContentControl content;
-            content.Type = interopWord.WdContentControlType.wdContentControlText;
-            
+                        
             Globals.ThisAddIn.currentDocument.Select();
             Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
             interopWord.ContentControls ccList = Globals.ThisAddIn.currentDocument.ContentControls;
