@@ -4,18 +4,19 @@ using System.Xml.Linq;
 using System.Linq;
 using interopWord = Microsoft.Office.Interop.Word;
 using Microsoft.Office.Tools.Word;
+using Microsoft.Office.Core;
 
 namespace XMLReader_Add_In
 {
     public partial class XMLBrowserForm : Form
     {
         private Microsoft.Office.Tools.Word.PlainTextContentControl plainTextControl1;
-        
+
         private void initTreeView()
         {
             XDocument XMLFileRoot = Globals.ThisAddIn.XML_ProjectInfo;
             XElement XMLRoot = XMLFileRoot.Root;
-            
+
             //DialogResult msgBox;
             //msgBox = MessageBox.Show(XMLFileRoot.ToString());
 
@@ -24,7 +25,7 @@ namespace XMLReader_Add_In
             RootNode.Tag = XMLFileRoot.Root;
             RootNode.Text = XMLFileRoot.Root.Name.ToString();
             treeView1.Nodes.Add(RootNode);
-            foreach(XElement rootChild in XMLRoot.Elements())
+            foreach (XElement rootChild in XMLRoot.Elements())
             {
                 BuildNodes(RootNode, rootChild);
             }
@@ -33,17 +34,26 @@ namespace XMLReader_Add_In
         ///<summary>
         ///Gets all the content controls in the active documet
         /// </summary>
-        
         private void GetAllControls()
         {
-            interopWord.ContentControls ccList = 
+            interopWord.ContentControls ccList =
                 Globals.ThisAddIn.currentDocument.ContentControls;
             foreach (interopWord.ContentControl cc in ccList)
             {
                 System.Diagnostics.Debug.WriteLine(cc.Type);
             }
         }
+        private List<ListViewItem> GetAllCustomXMLParts()
+        {
+            List<ListViewItem> listItems = new List<ListViewItem> { };
+            CustomXMLParts cc = Globals.ThisAddIn.currentDocument.CustomXMLParts;
+            foreach (CustomXMLPart item in cc)
+            {
+                ListViewXMLParts.Items.Add(new ListViewItem(item.NamespaceURI.ToString()));
 
+            }
+            return listItems;
+        }
         private void BuildNodes(TreeNode treeNode, XElement element)
         {
             foreach (XElement child in element.Elements())
@@ -70,9 +80,9 @@ namespace XMLReader_Add_In
 
         public XMLBrowserForm()
         {
-            
             InitializeComponent();
             initTreeView();
+            ListViewXMLParts.DragEnter += new System.Windows.Forms.DragEventHandler(ListViewXMLParts_DragEnter);
         }
 
         
@@ -96,6 +106,18 @@ namespace XMLReader_Add_In
             Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
             //plainTextControl1 = extendedDocument.Controls.AddPlainTextContentControl("adada");
             GetAllControls();
+            GetAllCustomXMLParts();
+        }
+        private void ListViewXMLParts_DragEnter(object sender, DragEventArgs e)
+        {
+            // Reset the label text.
+            System.Diagnostics.Debug.WriteLine("Hadled drag event");
+            XMLNodeValueLabel.Text = "None";
+        }
+
+        private void ListViewXMLParts_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+
         }
     }
 }

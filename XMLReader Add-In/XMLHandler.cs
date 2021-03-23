@@ -15,21 +15,11 @@ namespace XMLReader_Add_In
         public readonly XDocument xmlDocument;
         public XMLHandler(XDocument doc) => xmlDocument = doc;
 
-        public bool HasNameSpace()
-        {
-            foreach (XNode item in xmlDocument.Nodes())
-            {
-                if (item.NodeType is XNamespace)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        
         public XDocument PrettyXML()
         {
             
-            XDocument prettyDoc = new XDocument();
+            XDocument prettyDoc = new XDocument(new XElement(xmlDocument.Root.Name.LocalName));
 
 
             XElement UIvalue;
