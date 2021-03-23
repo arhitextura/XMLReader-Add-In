@@ -22,11 +22,15 @@ namespace XMLReader_Add_In
         private string XMLFilePath = string.Empty;
         private XDocument _XML_ProjectInfo;
         public XDocument XML_ProjectInfo { get => _XML_ProjectInfo; set => _XML_ProjectInfo = value; }
+        private XNamespace DEFAULT_NAMESPACE = "PROJECT INFO ARCHICAD";
         #endregion
 
-        //Toggle the XML Open file dialog and loads an xml file to
+        /// <summary>
+        /// Toggle the XML Open file dialog and loads an xml file to
+        /// </summary>
         internal void ToggleOpenFileDialog()
         {
+            
             currentDocument = Globals.ThisAddIn.Application.Application.ActiveDocument;
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -36,10 +40,22 @@ namespace XMLReader_Add_In
                 if(openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     XMLFilePath = openFileDialog.FileName;
-                    DialogResult msgBox;
-                    msgBox = MessageBox.Show(XMLFilePath);
+                    
+                    MessageBox.Show(XMLFilePath);
 
                     this.XML_ProjectInfo = XDocument.Load(XMLFilePath);
+                    try
+                    {
+                        XML_ProjectInfo.Root.Name = 
+                            DEFAULT_NAMESPACE + XML_ProjectInfo.Root.Name.LocalName;
+                        XMLHandler test = new XMLHandler(XML_ProjectInfo);
+                        XDocument x = test.PrettyXML();
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.ToString());
+                        
+                    }
                     this.XMLBrowserForm = new XMLBrowserForm();
                     this.XMLBrowserForm.Show();
                 }
@@ -48,19 +64,9 @@ namespace XMLReader_Add_In
 
         internal void addCustomXML ()
         {
-            //currentDocument = Globals.ThisAddIn.Application.Application.ActiveDocument;
-            string xmlString =
-            "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
-                "<employees xmlns=\"Employees\">" +
-                    "<employee>" +
-                        "<name>Karina Leal</name>" +
-                        "<hireDate>1999-04-01</hireDate>" +
-                        "<title>Manager</title>" +
-                    "</employee>" +
-                "</employees>";
+            string xmlString = XML_ProjectInfo.ToString();
             Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString);
-            DialogResult msgBox;
-            msgBox = MessageBox.Show(currentDocument.CustomXMLParts.SelectByNamespace("Employees").ToString());
+            MessageBox.Show(currentDocument.CustomXMLParts.SelectByNamespace(DEFAULT_NAMESPACE.ToString()).ToString());
         }
 
         #region Event handling functions

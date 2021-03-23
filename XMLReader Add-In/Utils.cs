@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using WordInterop = Microsoft.Office.Interop.Word;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using System.Xml.XPath;
 
 namespace XMLReader_Add_In
 {
@@ -14,8 +13,7 @@ namespace XMLReader_Add_In
     {
        public static void showMessageBox(string message)
         {
-            DialogResult msgBox;
-            msgBox = MessageBox.Show(message);
+            MessageBox.Show(message);
         }
 
        public static string ReturnXPath(XElement el)

@@ -36,24 +36,18 @@ namespace XMLReader_Add_In
         
         private void GetAllControls()
         {
-            
-            interopWord.ContentControls ccList = Globals.ThisAddIn.currentDocument.ContentControls;
+            interopWord.ContentControls ccList = 
+                Globals.ThisAddIn.currentDocument.ContentControls;
             foreach (interopWord.ContentControl cc in ccList)
             {
                 System.Diagnostics.Debug.WriteLine(cc.Type);
-                
             }
-
-
         }
 
         private void BuildNodes(TreeNode treeNode, XElement element)
-            
         {
-            
             foreach (XElement child in element.Elements())
             {
-    
                 TreeNode childTreeNode = new TreeNode();
                 childTreeNode.Tag = child;
                 if (child.Name.ToString().StartsWith("Fix") || child.Name.ToString().StartsWith("Custom"))
@@ -71,7 +65,6 @@ namespace XMLReader_Add_In
                 
                 treeNode.Nodes.Add(childTreeNode);
                 BuildNodes(childTreeNode, child);
-                
             }
         }
 
@@ -82,6 +75,7 @@ namespace XMLReader_Add_In
             initTreeView();
         }
 
+        
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             //TODO Add selection for all content controls in document
@@ -90,14 +84,8 @@ namespace XMLReader_Add_In
                 case TreeViewAction.ByMouse:
                     
                     XElement selectedNodeTagElement = e.Node.Tag as XElement;
-                    string s = string.Empty;
-                    foreach(XElement el in selectedNodeTagElement.Ancestors())
-                    {
-                        s += el.Name.ToString() + "/";
-                    }
-                    XMLNodeValueLabel.Text = s;
-
-                    //System.Diagnostics.Debug.Print(Utils.ReturnXPath(e.Node.Tag as XElement));
+                    
+                    XMLNodeValueLabel.Text = Utils.ReturnXPath(selectedNodeTagElement);
                     break;
             }
         }
