@@ -38,13 +38,13 @@ namespace XMLReader_Add_In
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
             this.XMLAddIn = this.Factory.CreateRibbonGroup();
+            this.StartButton = this.Factory.CreateRibbonButton();
             this.group1 = this.Factory.CreateRibbonGroup();
+            this.LoadContentButton = this.Factory.CreateRibbonButton();
+            this.SettingsGroup = this.Factory.CreateRibbonGroup();
             this.openXMLFileButton = this.Factory.CreateRibbonButton();
             this.AddCustomXMLButton = this.Factory.CreateRibbonButton();
-            this.LoadContentButton = this.Factory.CreateRibbonButton();
             this.settingsButton = this.Factory.CreateRibbonButton();
-            this.StartButton = this.Factory.CreateRibbonButton();
-            this.SettingsGroup = this.Factory.CreateRibbonGroup();
             this.tab1.SuspendLayout();
             this.XMLAddIn.SuspendLayout();
             this.group1.SuspendLayout();
@@ -66,11 +66,33 @@ namespace XMLReader_Add_In
             this.XMLAddIn.Label = "Controls";
             this.XMLAddIn.Name = "XMLAddIn";
             // 
+            // StartButton
+            // 
+            this.StartButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.StartButton.Image = ((System.Drawing.Image)(resources.GetObject("StartButton.Image")));
+            this.StartButton.Label = "Start";
+            this.StartButton.Name = "StartButton";
+            this.StartButton.ShowImage = true;
+            // 
             // group1
             // 
             this.group1.Items.Add(this.LoadContentButton);
             this.group1.Label = "Customize";
             this.group1.Name = "group1";
+            // 
+            // LoadContentButton
+            // 
+            this.LoadContentButton.Label = "List content controls";
+            this.LoadContentButton.Name = "LoadContentButton";
+            this.LoadContentButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LoadContentButton_Click);
+            // 
+            // SettingsGroup
+            // 
+            this.SettingsGroup.Items.Add(this.openXMLFileButton);
+            this.SettingsGroup.Items.Add(this.AddCustomXMLButton);
+            this.SettingsGroup.Items.Add(this.settingsButton);
+            this.SettingsGroup.Label = "Settings";
+            this.SettingsGroup.Name = "SettingsGroup";
             // 
             // openXMLFileButton
             // 
@@ -90,12 +112,6 @@ namespace XMLReader_Add_In
             this.AddCustomXMLButton.ShowImage = true;
             this.AddCustomXMLButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddCustomXMLButton_Click);
             // 
-            // LoadContentButton
-            // 
-            this.LoadContentButton.Label = "List content controls";
-            this.LoadContentButton.Name = "LoadContentButton";
-            this.LoadContentButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LoadContentButton_Click);
-            // 
             // settingsButton
             // 
             this.settingsButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -103,22 +119,6 @@ namespace XMLReader_Add_In
             this.settingsButton.Label = "Settings";
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.ShowImage = true;
-            // 
-            // StartButton
-            // 
-            this.StartButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.StartButton.Image = ((System.Drawing.Image)(resources.GetObject("StartButton.Image")));
-            this.StartButton.Label = "Start";
-            this.StartButton.Name = "StartButton";
-            this.StartButton.ShowImage = true;
-            // 
-            // SettingsGroup
-            // 
-            this.SettingsGroup.Items.Add(this.openXMLFileButton);
-            this.SettingsGroup.Items.Add(this.AddCustomXMLButton);
-            this.SettingsGroup.Items.Add(this.settingsButton);
-            this.SettingsGroup.Label = "Settings";
-            this.SettingsGroup.Name = "SettingsGroup";
             // 
             // Ribbon1
             // 

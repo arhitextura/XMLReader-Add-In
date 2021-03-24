@@ -48,8 +48,6 @@ namespace XMLReader_Add_In
                     {
                         XML_ProjectInfo.Root.Name = 
                             DEFAULT_NAMESPACE + XML_ProjectInfo.Root.Name.LocalName;
-                        XMLHandler test = new XMLHandler(XML_ProjectInfo);
-                        XDocument x = test.PrettyXML();
                     }
                     catch (Exception e)
                     {
@@ -64,8 +62,17 @@ namespace XMLReader_Add_In
 
         internal void addCustomXML ()
         {
-            string xmlString = XML_ProjectInfo.ToString();
-            Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString);
+            if (XML_ProjectInfo == null)
+            {
+                MessageBox.Show("Please load an XML File before you proceed adding the custom xml");
+                ToggleOpenFileDialog();
+            } else
+            {
+                string xmlString = XML_ProjectInfo.ToString();
+                Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString);
+                System.Diagnostics.Debug.WriteLine(customXML.Id);
+            }
+            
             MessageBox.Show(currentDocument.CustomXMLParts.SelectByNamespace(DEFAULT_NAMESPACE.ToString()).ToString());
         }
 
