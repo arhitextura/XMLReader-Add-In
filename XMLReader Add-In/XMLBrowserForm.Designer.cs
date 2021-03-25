@@ -38,6 +38,9 @@ namespace XMLReader_Add_In
             this.columnValueHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnTagHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ccListView = new System.Windows.Forms.ListView();
+            this.contentControlHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.mappingHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             XMLDescription = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -138,12 +141,36 @@ namespace XMLReader_Add_In
             this.splitContainer1.SplitterDistance = 307;
             this.splitContainer1.TabIndex = 6;
             // 
+            // ccListView
+            // 
+            this.ccListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.contentControlHeader,
+            this.mappingHeader});
+            this.ccListView.HideSelection = false;
+            this.ccListView.Location = new System.Drawing.Point(890, 33);
+            this.ccListView.Name = "ccListView";
+            this.ccListView.Size = new System.Drawing.Size(358, 567);
+            this.ccListView.TabIndex = 7;
+            this.ccListView.UseCompatibleStateImageBehavior = false;
+            this.ccListView.View = System.Windows.Forms.View.Details;
+            // 
+            // contentControlHeader
+            // 
+            this.contentControlHeader.Text = "Title";
+            this.contentControlHeader.Width = 74;
+            // 
+            // mappingHeader
+            // 
+            this.mappingHeader.Text = "Mapping";
+            this.mappingHeader.Width = 198;
+            // 
             // XMLBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(908, 612);
+            this.ClientSize = new System.Drawing.Size(1260, 612);
+            this.Controls.Add(this.ccListView);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.InsertContentControlButton);
             this.Controls.Add(this.XMLNodeValueLabel);
@@ -170,5 +197,8 @@ namespace XMLReader_Add_In
         private System.Windows.Forms.ColumnHeader columnValueHeader;
         private System.Windows.Forms.ColumnHeader columnTagHeader;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ListView ccListView;
+        private System.Windows.Forms.ColumnHeader contentControlHeader;
+        private System.Windows.Forms.ColumnHeader mappingHeader;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -9,20 +10,36 @@ using Microsoft.Office.Core;
 
 namespace XMLReader_Add_In
 {
+    
     public partial class XMLBrowserForm : Form
     {
-        #region Variables
-        
-        private Microsoft.Office.Tools.Word.PlainTextContentControl plainTextControl1;
+        #region Events
+        public delegate void ControlAddedEventHandler(object source, EventArgs args);
+        public event ControlAddedEventHandler ControlAdded;
         #endregion
+
+        #region Variables
+
+        
+        #endregion
+        
         public XMLBrowserForm()
         {
             InitializeComponent();
             initTreeView();
             InitializeListView();
+            InitializeContentControlListView();
             ListViewXMLParts.MouseUp += new MouseEventHandler(ListViewXMLParts_MouseEvent);
+            
         }
 
+        protected virtual void OnControlAdded()
+        {
+            if(ControlAdded != null)
+            {
+                ControlAdded(this, EventArgs.Empty);
+            }
+        }
         private void initTreeView()
         {
             XDocument XMLFileRoot = Globals.ThisAddIn.XML_ProjectInfo;
@@ -40,15 +57,30 @@ namespace XMLReader_Add_In
         ///<summary>
         ///Gets all the content controls in the active documet
         /// </summary>
-        private void GetAllControls()
+        private interopWord.ContentControls GetAllControls()
         {
             interopWord.ContentControls ccList =
                 Globals.ThisAddIn.currentDocument.ContentControls;
             foreach (interopWord.ContentControl cc in ccList)
             {
-                Debug.WriteLine(cc.Type);
+                Debug.WriteLine(cc.Title);
             }
+            return ccList;
         }
+
+        private void InitializeContentControlListView()
+        {
+            interopWord.ContentControls ccList = this.GetAllControls();
+            foreach (interopWord.ContentControl cc in ccList)
+            {
+                ListViewItem ccListViewItem = new ListViewItem(cc.Title);
+                ccListViewItem.SubItems.Add(cc.XMLMapping.XPath);
+                Debug.WriteLine(cc.XMLMapping.XPath);
+                ccListView.Items.Add(ccListViewItem);
+            }
+            
+        }
+
 
         /// <summary>
         /// Populates the ListViewXMLParts
@@ -67,19 +99,16 @@ namespace XMLReader_Add_In
                 UIKeyItem.SubItems.Add(keyValueElement.Value);
                 UIKeyItem.Tag = keyValueElement;
                 UIKeyItem.SubItems.Add(UIKeyItem.Tag.ToString());
-
                 ListViewXMLParts.Items.Add(UIKeyItem);
                 
             }
-         
-            //CustomXMLParts cc = Globals.ThisAddIn.currentDocument.CustomXMLParts;
-            //foreach (CustomXMLPart item in cc)
-            //{
-            //    ListViewXMLParts.Items.Add(new ListViewItem(item.NamespaceURI.ToString()));
-
-            //}
         }
 
+        /// <summary>
+        /// Populates a Treeview with a given initial TreeNode
+        /// </summary>
+        /// <param name="treeNode">A tree node that is already created, ussualy a Root node </param>
+        /// <param name="element">An XEleement which contains children, ussualy a Root XML element</param>
         private void BuildNodes(TreeNode treeNode, XElement element)
         {
             foreach (XElement child in element.Elements())
@@ -103,8 +132,24 @@ namespace XMLReader_Add_In
                 BuildNodes(childTreeNode, child);
             }
         }
+        
+        private void InsertContentControl()
+        {
+            Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
+            interopWord.Range sln = extendedDocument.Application.Selection.Range;
+            try
+            {
+                interopWord.ContentControl plainText = extendedDocument.ContentControls.Add(interopWord.WdContentControlType.wdContentControlText, sln);
+                plainText.Title = "Custom Title";
+                OnControlAdded();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
 
-       
+            }
+        }
+        #region Events
 
         
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -121,12 +166,9 @@ namespace XMLReader_Add_In
             }
         }
 
-        private void InsertContentControlButton_Click(object sender, System.EventArgs e)
+        private void InsertContentControlButton_Click(object sender, System.EventArgs ev)
         {
-            Globals.ThisAddIn.currentDocument.Select();
-            Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
-            plainTextControl1 = extendedDocument.Controls.AddPlainTextContentControl("adada");
-            GetAllControls();
+            InsertContentControl();
         }
         private void ListViewXMLParts_MouseEvent(object sender, MouseEventArgs e)
         {
@@ -140,5 +182,6 @@ namespace XMLReader_Add_In
         {
 
         }
+        #endregion
     }
 }
