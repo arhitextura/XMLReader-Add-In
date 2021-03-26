@@ -10,19 +10,16 @@ using Microsoft.Office.Core;
 
 namespace XMLReader_Add_In
 {
-    
+
     public partial class XMLBrowserForm : Form
     {
-        #region Events
-        public delegate void ControlAddedEventHandler(object source, EventArgs args);
-        public event ControlAddedEventHandler ControlAdded;
-        #endregion
+
 
         #region Variables
+        Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
 
-        
         #endregion
-        
+
         public XMLBrowserForm()
         {
             InitializeComponent();
@@ -30,15 +27,14 @@ namespace XMLReader_Add_In
             InitializeListView();
             InitializeContentControlListView();
             ListViewXMLParts.MouseUp += new MouseEventHandler(ListViewXMLParts_MouseEvent);
-            
+            extendedDocument.ActivateEvent += new WindowEventHandler(ThisDocument_ActivateEvent);
+
         }
 
-        protected virtual void OnControlAdded()
+        private void ThisDocument_ActivateEvent(object sender, WindowEventArgs e)
         {
-            if(ControlAdded != null)
-            {
-                ControlAdded(this, EventArgs.Empty);
-            }
+            extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
+            InitializeContentControlListView();
         }
         private void initTreeView()
         {
@@ -54,33 +50,19 @@ namespace XMLReader_Add_In
             }
         }
 
-        ///<summary>
-        ///Gets all the content controls in the active documet
-        /// </summary>
-        private interopWord.ContentControls GetAllControls()
-        {
-            interopWord.ContentControls ccList =
-                Globals.ThisAddIn.currentDocument.ContentControls;
-            foreach (interopWord.ContentControl cc in ccList)
-            {
-                Debug.WriteLine(cc.Title);
-            }
-            return ccList;
-        }
-
         private void InitializeContentControlListView()
         {
-            interopWord.ContentControls ccList = this.GetAllControls();
+            ccListView.Items.Clear();
+            interopWord.ContentControls ccList = Globals.ThisAddIn.currentDocument.ContentControls;
             foreach (interopWord.ContentControl cc in ccList)
             {
                 ListViewItem ccListViewItem = new ListViewItem(cc.Title);
                 ccListViewItem.SubItems.Add(cc.XMLMapping.XPath);
-                Debug.WriteLine(cc.XMLMapping.XPath);
+                
                 ccListView.Items.Add(ccListViewItem);
             }
             
         }
-
 
         /// <summary>
         /// Populates the ListViewXMLParts
@@ -127,7 +109,6 @@ namespace XMLReader_Add_In
                 {
                     childTreeNode.Text = child.Name.ToString();
                 }
-                
                 treeNode.Nodes.Add(childTreeNode);
                 BuildNodes(childTreeNode, child);
             }
@@ -135,13 +116,13 @@ namespace XMLReader_Add_In
         
         private void InsertContentControl()
         {
-            Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
             interopWord.Range sln = extendedDocument.Application.Selection.Range;
             try
             {
-                interopWord.ContentControl plainText = extendedDocument.ContentControls.Add(interopWord.WdContentControlType.wdContentControlText, sln);
-                plainText.Title = "Custom Title";
-                OnControlAdded();
+                interopWord.ContentControl plainTextControl = extendedDocument.ContentControls.Add(interopWord.WdContentControlType.wdContentControlText, sln);
+                plainTextControl.Title = "Custom Title";
+
+                InitializeContentControlListView();
             }
             catch (Exception err)
             {
@@ -149,6 +130,7 @@ namespace XMLReader_Add_In
 
             }
         }
+
         #region Events
 
         
@@ -178,10 +160,6 @@ namespace XMLReader_Add_In
             XMLNodeValueLabel.Text = "None";
         }
 
-        private void ListViewXMLParts_SelectedIndexChanged(object sender, System.EventArgs e)
-        {
-
-        }
         #endregion
     }
 }

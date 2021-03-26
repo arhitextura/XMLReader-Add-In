@@ -108,7 +108,7 @@ namespace XMLReader_Add_In
             this.ListViewXMLParts.TileSize = new System.Drawing.Size(50, 50);
             this.ListViewXMLParts.UseCompatibleStateImageBehavior = false;
             this.ListViewXMLParts.View = System.Windows.Forms.View.Details;
-            this.ListViewXMLParts.SelectedIndexChanged += new System.EventHandler(this.ListViewXMLParts_SelectedIndexChanged);
+            
             // 
             // columnNameHeader
             // 

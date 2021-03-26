@@ -236,7 +236,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>AC3AE857D62889E7175B70F1F9120BB6619F9476</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2F52A4CD35A74DCF002338D8BFA2A026ABDB210A</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

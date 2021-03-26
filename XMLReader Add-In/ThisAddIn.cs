@@ -6,7 +6,6 @@ using System.Xml.Linq;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
-using Microsoft.Office.Tools.Word.Controls;
 
 
 
@@ -91,6 +90,7 @@ namespace XMLReader_Add_In
             ((Word.ApplicationEvents4_Event)this.Application).NewDocument +=
                 new Word.ApplicationEvents4_NewDocumentEventHandler(setCurrentDocument);
         }
+        
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
