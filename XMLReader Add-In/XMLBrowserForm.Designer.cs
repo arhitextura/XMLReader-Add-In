@@ -64,7 +64,7 @@ namespace XMLReader_Add_In
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(307, 567);
+            this.treeView1.Size = new System.Drawing.Size(307, 526);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -72,7 +72,7 @@ namespace XMLReader_Add_In
             // 
             this.XMLNodeValueLabel.AutoSize = true;
             this.XMLNodeValueLabel.Font = new System.Drawing.Font("Montserrat", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.XMLNodeValueLabel.Location = new System.Drawing.Point(656, 59);
+            this.XMLNodeValueLabel.Location = new System.Drawing.Point(656, 74);
             this.XMLNodeValueLabel.Name = "XMLNodeValueLabel";
             this.XMLNodeValueLabel.Size = new System.Drawing.Size(173, 18);
             this.XMLNodeValueLabel.TabIndex = 3;
@@ -80,7 +80,7 @@ namespace XMLReader_Add_In
             // 
             // InsertContentControlButton
             // 
-            this.InsertContentControlButton.Location = new System.Drawing.Point(656, 33);
+            this.InsertContentControlButton.Location = new System.Drawing.Point(323, 45);
             this.InsertContentControlButton.Name = "InsertContentControlButton";
             this.InsertContentControlButton.Size = new System.Drawing.Size(228, 23);
             this.InsertContentControlButton.TabIndex = 4;
@@ -103,12 +103,11 @@ namespace XMLReader_Add_In
             this.ListViewXMLParts.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.ListViewXMLParts.Location = new System.Drawing.Point(0, 0);
             this.ListViewXMLParts.Name = "ListViewXMLParts";
-            this.ListViewXMLParts.Size = new System.Drawing.Size(327, 567);
+            this.ListViewXMLParts.Size = new System.Drawing.Size(327, 526);
             this.ListViewXMLParts.TabIndex = 5;
             this.ListViewXMLParts.TileSize = new System.Drawing.Size(50, 50);
             this.ListViewXMLParts.UseCompatibleStateImageBehavior = false;
             this.ListViewXMLParts.View = System.Windows.Forms.View.Details;
-            
             // 
             // columnNameHeader
             // 
@@ -127,7 +126,10 @@ namespace XMLReader_Add_In
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Location = new System.Drawing.Point(12, 33);
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(12, 74);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -137,19 +139,24 @@ namespace XMLReader_Add_In
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.ListViewXMLParts);
-            this.splitContainer1.Size = new System.Drawing.Size(638, 567);
+            this.splitContainer1.Size = new System.Drawing.Size(638, 526);
             this.splitContainer1.SplitterDistance = 307;
             this.splitContainer1.TabIndex = 6;
             // 
             // ccListView
             // 
+            this.ccListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ccListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.contentControlHeader,
             this.mappingHeader});
+            this.ccListView.FullRowSelect = true;
+            this.ccListView.GridLines = true;
             this.ccListView.HideSelection = false;
-            this.ccListView.Location = new System.Drawing.Point(890, 33);
+            this.ccListView.Location = new System.Drawing.Point(890, 74);
             this.ccListView.Name = "ccListView";
-            this.ccListView.Size = new System.Drawing.Size(358, 567);
+            this.ccListView.Size = new System.Drawing.Size(358, 526);
             this.ccListView.TabIndex = 7;
             this.ccListView.UseCompatibleStateImageBehavior = false;
             this.ccListView.View = System.Windows.Forms.View.Details;

@@ -35,60 +35,27 @@ namespace XMLReader_Add_In
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ribbon1));
             this.tab1 = this.Factory.CreateRibbonTab();
-            this.XMLAddIn = this.Factory.CreateRibbonGroup();
-            this.StartButton = this.Factory.CreateRibbonButton();
-            this.group1 = this.Factory.CreateRibbonGroup();
-            this.LoadContentButton = this.Factory.CreateRibbonButton();
             this.SettingsGroup = this.Factory.CreateRibbonGroup();
             this.openXMLFileButton = this.Factory.CreateRibbonButton();
+            this.ViewXML = this.Factory.CreateRibbonButton();
             this.AddCustomXMLButton = this.Factory.CreateRibbonButton();
             this.settingsButton = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
-            this.XMLAddIn.SuspendLayout();
-            this.group1.SuspendLayout();
             this.SettingsGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
-            this.tab1.Groups.Add(this.XMLAddIn);
-            this.tab1.Groups.Add(this.group1);
             this.tab1.Groups.Add(this.SettingsGroup);
             this.tab1.Label = "XML Add-In";
             this.tab1.Name = "tab1";
             // 
-            // XMLAddIn
-            // 
-            this.XMLAddIn.Items.Add(this.StartButton);
-            this.XMLAddIn.Label = "Controls";
-            this.XMLAddIn.Name = "XMLAddIn";
-            // 
-            // StartButton
-            // 
-            this.StartButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.StartButton.Image = ((System.Drawing.Image)(resources.GetObject("StartButton.Image")));
-            this.StartButton.Label = "Start";
-            this.StartButton.Name = "StartButton";
-            this.StartButton.ShowImage = true;
-            // 
-            // group1
-            // 
-            this.group1.Items.Add(this.LoadContentButton);
-            this.group1.Label = "Customize";
-            this.group1.Name = "group1";
-            // 
-            // LoadContentButton
-            // 
-            this.LoadContentButton.Label = "List content controls";
-            this.LoadContentButton.Name = "LoadContentButton";
-            this.LoadContentButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.LoadContentButton_Click);
-            // 
             // SettingsGroup
             // 
             this.SettingsGroup.Items.Add(this.openXMLFileButton);
+            this.SettingsGroup.Items.Add(this.ViewXML);
             this.SettingsGroup.Items.Add(this.AddCustomXMLButton);
             this.SettingsGroup.Items.Add(this.settingsButton);
             this.SettingsGroup.Label = "Settings";
@@ -103,11 +70,20 @@ namespace XMLReader_Add_In
             this.openXMLFileButton.ShowImage = true;
             this.openXMLFileButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click);
             // 
+            // ViewXML
+            // 
+            this.ViewXML.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.ViewXML.Image = global::XMLReader_Add_In.Properties.Resources.iconfinder_document_file_paper_page_26_2850884;
+            this.ViewXML.Label = "View XML";
+            this.ViewXML.Name = "ViewXML";
+            this.ViewXML.ShowImage = true;
+            this.ViewXML.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.ViewXMLLoadedXML);
+            // 
             // AddCustomXMLButton
             // 
             this.AddCustomXMLButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
             this.AddCustomXMLButton.Image = global::XMLReader_Add_In.Properties.Resources.add_insert_plus_icon_178023;
-            this.AddCustomXMLButton.Label = "Add custom XML";
+            this.AddCustomXMLButton.Label = "Add custom XML Part";
             this.AddCustomXMLButton.Name = "AddCustomXMLButton";
             this.AddCustomXMLButton.ShowImage = true;
             this.AddCustomXMLButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.AddCustomXMLButton_Click);
@@ -128,10 +104,6 @@ namespace XMLReader_Add_In
             this.Load += new Microsoft.Office.Tools.Ribbon.RibbonUIEventHandler(this.Ribbon1_Load);
             this.tab1.ResumeLayout(false);
             this.tab1.PerformLayout();
-            this.XMLAddIn.ResumeLayout(false);
-            this.XMLAddIn.PerformLayout();
-            this.group1.ResumeLayout(false);
-            this.group1.PerformLayout();
             this.SettingsGroup.ResumeLayout(false);
             this.SettingsGroup.PerformLayout();
             this.ResumeLayout(false);
@@ -141,14 +113,11 @@ namespace XMLReader_Add_In
         #endregion
 
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup XMLAddIn;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton openXMLFileButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonGroup group1;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton AddCustomXMLButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonButton settingsButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton LoadContentButton;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton StartButton;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup SettingsGroup;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton ViewXML;
     }
 
     partial class ThisRibbonCollection

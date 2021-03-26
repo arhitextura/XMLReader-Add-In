@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Office.Interop.Word;
+using System.Windows.Forms;
 
 namespace XMLReader_Add_In
 {
@@ -16,7 +17,23 @@ namespace XMLReader_Add_In
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
         {
+            
             Globals.ThisAddIn.ToggleOpenFileDialog();
+            
+            
+        }
+        private void ViewXMLLoadedXML (object sender, RibbonControlEventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(Globals.ThisAddIn.currentDocument.Variables["CUSTOM_XML_ID"].Value);
+            }
+            catch (Exception err)
+            {
+
+                MessageBox.Show(err.Message);
+            }
+                
             
             
         }

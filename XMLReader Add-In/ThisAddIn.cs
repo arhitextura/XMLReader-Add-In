@@ -8,13 +8,11 @@ using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 
 
-
-
 namespace XMLReader_Add_In
 {
     public partial class ThisAddIn
     {
-        private System.Windows.Forms.Form XMLBrowserForm;
+        private Form XMLBrowserForm;
 
         #region GLOBALS
         public Word.Document currentDocument;
@@ -30,11 +28,12 @@ namespace XMLReader_Add_In
         internal void ToggleOpenFileDialog()
         {
             
-            currentDocument = Globals.ThisAddIn.Application.Application.ActiveDocument;
+            currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*";
                 openFileDialog.RestoreDirectory = true;
+                
                 
                 if(openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -45,15 +44,18 @@ namespace XMLReader_Add_In
                     this.XML_ProjectInfo = XDocument.Load(XMLFilePath);
                     try
                     {
-                        XML_ProjectInfo.Root.Name = 
+                        XML_ProjectInfo.Root.Name =
                             DEFAULT_NAMESPACE + XML_ProjectInfo.Root.Name.LocalName;
+
                     }
                     catch (Exception e)
                     {
                         MessageBox.Show(e.ToString());
                         
+
                     }
                     this.XMLBrowserForm = new XMLBrowserForm();
+                    XMLBrowserForm.Text = ($"{XMLBrowserForm.Name} - {currentDocument.Name}");
                     this.XMLBrowserForm.Show();
                 }
             }
@@ -67,9 +69,12 @@ namespace XMLReader_Add_In
                 ToggleOpenFileDialog();
             } else
             {
-                string xmlString = XML_ProjectInfo.ToString();
-                Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString);
-                System.Diagnostics.Debug.WriteLine(customXML.Id);
+                if(currentDocument.CustomXMLParts.SelectByNamespace(DEFAULT_NAMESPACE.ToString()).Count < 1)
+                {
+                    string xmlString = XML_ProjectInfo.ToString();
+                    Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString, missing);
+                    System.Diagnostics.Debug.WriteLine(customXML.NamespaceURI);
+                }
             }
             
             MessageBox.Show(currentDocument.CustomXMLParts.SelectByNamespace(DEFAULT_NAMESPACE.ToString()).ToString());

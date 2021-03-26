@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Configuration;
 using System.Windows.Forms;
+using System.Drawing; 
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Xml.Linq;
 using System.Linq;
 using interopWord = Microsoft.Office.Interop.Word;
@@ -17,7 +20,7 @@ namespace XMLReader_Add_In
 
         #region Variables
         Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
-
+        
         #endregion
 
         public XMLBrowserForm()
@@ -52,11 +55,23 @@ namespace XMLReader_Add_In
 
         private void InitializeContentControlListView()
         {
+            
+            Color unmappedColor = ColorTranslator.FromHtml(Settings.Default.UnmappedCCForeColor);
+            Color mappedColor = ColorTranslator.FromHtml(Settings.Default.MappedCCForeColor);
+            
             ccListView.Items.Clear();
             interopWord.ContentControls ccList = Globals.ThisAddIn.currentDocument.ContentControls;
             foreach (interopWord.ContentControl cc in ccList)
             {
                 ListViewItem ccListViewItem = new ListViewItem(cc.Title);
+                if (!cc.XMLMapping.IsMapped)
+                {
+                    ccListViewItem.ForeColor = unmappedColor;
+                }
+                else
+                {
+                    ccListViewItem.ForeColor = mappedColor;
+                }
                 ccListViewItem.SubItems.Add(cc.XMLMapping.XPath);
                 
                 ccListView.Items.Add(ccListViewItem);
@@ -136,7 +151,7 @@ namespace XMLReader_Add_In
         
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            //TODO Add selection for all content controls in document
+            
             switch ((e.Action))
             {
                 case TreeViewAction.ByMouse:
