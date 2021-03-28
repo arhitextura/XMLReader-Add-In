@@ -56,6 +56,7 @@ namespace XMLReader_Add_In
                     }
                     this.XMLBrowserForm = new XMLBrowserForm();
                     XMLBrowserForm.Text = ($"{XMLBrowserForm.Name} - {currentDocument.Name}");
+                    //TO-DO make it appear in fron of all windows
                     this.XMLBrowserForm.Show();
                 }
             }
@@ -65,7 +66,7 @@ namespace XMLReader_Add_In
         {
             if (XML_ProjectInfo == null)
             {
-                MessageBox.Show("Please load an XML File before you proceed adding the custom xml");
+                MessageBox.Show("Please load an XML File before you proceed adding the custom xml.");
                 ToggleOpenFileDialog();
             } else
             {
@@ -81,9 +82,16 @@ namespace XMLReader_Add_In
         }
 
         #region Event handling functions
-        private void setCurrentDocument(Word.Document doc)
+        void setCurrentDocument(Word.Document doc)
         {
             currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
+            
+            
+        }
+        void setCurrentDocument(Word.Document doc, Word.Window wn)
+        {
+            currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
+
         }
         #endregion
 
@@ -94,6 +102,7 @@ namespace XMLReader_Add_In
 
             ((Word.ApplicationEvents4_Event)this.Application).NewDocument +=
                 new Word.ApplicationEvents4_NewDocumentEventHandler(setCurrentDocument);
+            this.Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(setCurrentDocument);
         }
         
 

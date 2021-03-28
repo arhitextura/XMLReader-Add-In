@@ -11,14 +11,8 @@ namespace XMLReader_Add_In
 {
     public class Utils
     {
-       public static void showMessageBox(string message)
+        public static string ReturnXPath(XElement el)
         {
-            MessageBox.Show(message);
-        }
-
-       public static string ReturnXPath(XElement el)
-        {
-            
             string pathString = "/";
             List<XElement> ancestorsList = el.Ancestors().ToList();
             ancestorsList.Reverse();
@@ -30,5 +24,7 @@ namespace XMLReader_Add_In
             pathString += el.Name.ToString();
             return pathString;
         }
+
     }
+
 }

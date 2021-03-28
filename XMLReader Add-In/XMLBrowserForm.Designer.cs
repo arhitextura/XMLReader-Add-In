@@ -28,6 +28,7 @@ namespace XMLReader_Add_In
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label XMLDescription;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XMLBrowserForm));
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -41,11 +42,14 @@ namespace XMLReader_Add_In
             this.ccListView = new System.Windows.Forms.ListView();
             this.contentControlHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mappingHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ccListView_ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ccRemapMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             XMLDescription = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.ccListView_ContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // XMLDescription
@@ -60,11 +64,13 @@ namespace XMLReader_Add_In
             // 
             // treeView1
             // 
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(307, 526);
+            this.treeView1.Size = new System.Drawing.Size(266, 526);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -72,7 +78,7 @@ namespace XMLReader_Add_In
             // 
             this.XMLNodeValueLabel.AutoSize = true;
             this.XMLNodeValueLabel.Font = new System.Drawing.Font("Montserrat", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.XMLNodeValueLabel.Location = new System.Drawing.Point(656, 74);
+            this.XMLNodeValueLabel.Location = new System.Drawing.Point(180, 47);
             this.XMLNodeValueLabel.Name = "XMLNodeValueLabel";
             this.XMLNodeValueLabel.Size = new System.Drawing.Size(173, 18);
             this.XMLNodeValueLabel.TabIndex = 3;
@@ -80,9 +86,9 @@ namespace XMLReader_Add_In
             // 
             // InsertContentControlButton
             // 
-            this.InsertContentControlButton.Location = new System.Drawing.Point(323, 45);
+            this.InsertContentControlButton.Location = new System.Drawing.Point(12, 45);
             this.InsertContentControlButton.Name = "InsertContentControlButton";
-            this.InsertContentControlButton.Size = new System.Drawing.Size(228, 23);
+            this.InsertContentControlButton.Size = new System.Drawing.Size(162, 23);
             this.InsertContentControlButton.TabIndex = 4;
             this.InsertContentControlButton.Text = "Insert Content Control";
             this.InsertContentControlButton.UseVisualStyleBackColor = true;
@@ -91,19 +97,21 @@ namespace XMLReader_Add_In
             // ListViewXMLParts
             // 
             this.ListViewXMLParts.AllowDrop = true;
+            this.ListViewXMLParts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ListViewXMLParts.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ListViewXMLParts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnNameHeader,
             this.columnValueHeader,
             this.columnTagHeader});
-            this.ListViewXMLParts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListViewXMLParts.FullRowSelect = true;
             this.ListViewXMLParts.GridLines = true;
             this.ListViewXMLParts.HideSelection = false;
             this.ListViewXMLParts.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.ListViewXMLParts.Location = new System.Drawing.Point(0, 0);
             this.ListViewXMLParts.Name = "ListViewXMLParts";
-            this.ListViewXMLParts.Size = new System.Drawing.Size(327, 526);
+            this.ListViewXMLParts.Size = new System.Drawing.Size(295, 526);
             this.ListViewXMLParts.TabIndex = 5;
             this.ListViewXMLParts.TileSize = new System.Drawing.Size(50, 50);
             this.ListViewXMLParts.UseCompatibleStateImageBehavior = false;
@@ -139,14 +147,14 @@ namespace XMLReader_Add_In
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.ListViewXMLParts);
-            this.splitContainer1.Size = new System.Drawing.Size(638, 526);
-            this.splitContainer1.SplitterDistance = 307;
+            this.splitContainer1.Size = new System.Drawing.Size(573, 526);
+            this.splitContainer1.SplitterDistance = 269;
+            this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 6;
             // 
             // ccListView
             // 
-            this.ccListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.ccListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ccListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.contentControlHeader,
@@ -154,9 +162,9 @@ namespace XMLReader_Add_In
             this.ccListView.FullRowSelect = true;
             this.ccListView.GridLines = true;
             this.ccListView.HideSelection = false;
-            this.ccListView.Location = new System.Drawing.Point(890, 74);
+            this.ccListView.Location = new System.Drawing.Point(591, 74);
             this.ccListView.Name = "ccListView";
-            this.ccListView.Size = new System.Drawing.Size(358, 526);
+            this.ccListView.Size = new System.Drawing.Size(455, 526);
             this.ccListView.TabIndex = 7;
             this.ccListView.UseCompatibleStateImageBehavior = false;
             this.ccListView.View = System.Windows.Forms.View.Details;
@@ -171,12 +179,33 @@ namespace XMLReader_Add_In
             this.mappingHeader.Text = "Mapping";
             this.mappingHeader.Width = 198;
             // 
+            // ccListView_ContextMenuStrip
+            // 
+            this.ccListView_ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ccRemapMenuItem});
+            this.ccListView_ContextMenuStrip.Name = "ccListView_ContextMenuStrip";
+            this.ccListView_ContextMenuStrip.ShowImageMargin = false;
+            this.ccListView_ContextMenuStrip.Size = new System.Drawing.Size(140, 26);
+            this.ccListView_ContextMenuStrip.Text = "Options";
+            // 
+            // ccRemapMenuItem
+            // 
+            this.ccRemapMenuItem.Image = global::XMLReader_Add_In.Properties.Resources.link_16px_16px;
+            this.ccRemapMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.ccRemapMenuItem.ImageTransparentColor = System.Drawing.Color.White;
+            this.ccRemapMenuItem.Name = "ccRemapMenuItem";
+            this.ccRemapMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.ccRemapMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.ccRemapMenuItem.Text = "Remap ...";
+            this.ccRemapMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.ccRemapMenuItem.Click += new System.EventHandler(this.ccRemapMenuItem_Click);
+            // 
             // XMLBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1260, 612);
+            this.ClientSize = new System.Drawing.Size(1058, 612);
             this.Controls.Add(this.ccListView);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.InsertContentControlButton);
@@ -189,6 +218,7 @@ namespace XMLReader_Add_In
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.ccListView_ContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,5 +237,7 @@ namespace XMLReader_Add_In
         private System.Windows.Forms.ListView ccListView;
         private System.Windows.Forms.ColumnHeader contentControlHeader;
         private System.Windows.Forms.ColumnHeader mappingHeader;
+        private System.Windows.Forms.ContextMenuStrip ccListView_ContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem ccRemapMenuItem;
     }
 }

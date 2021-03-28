@@ -29,13 +29,17 @@ namespace XMLReader_Add_In
             initTreeView();
             InitializeListView();
             InitializeContentControlListView();
+
             ListViewXMLParts.MouseUp += new MouseEventHandler(ListViewXMLParts_MouseEvent);
             extendedDocument.ActivateEvent += new WindowEventHandler(ThisDocument_ActivateEvent);
-
+            ccListView.SelectedIndexChanged += new System.EventHandler(ccListView_SelectedIndexChanged);
+            ccListView.MouseUp += new MouseEventHandler(ccListView_MouseEvent);           
+  
         }
 
         private void ThisDocument_ActivateEvent(object sender, WindowEventArgs e)
         {
+            Globals.ThisAddIn.currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
             extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
             InitializeContentControlListView();
         }
@@ -64,6 +68,7 @@ namespace XMLReader_Add_In
             foreach (interopWord.ContentControl cc in ccList)
             {
                 ListViewItem ccListViewItem = new ListViewItem(cc.Title);
+                ccListViewItem.Tag = cc;
                 if (!cc.XMLMapping.IsMapped)
                 {
                     ccListViewItem.ForeColor = unmappedColor;
@@ -148,7 +153,47 @@ namespace XMLReader_Add_In
 
         #region Events
 
-        
+        private void ccListView_MouseEvent(object sender, MouseEventArgs e)
+        {
+            interopWord.ContentControl focusedCC= null; 
+            ListViewItem focusedItem = null;
+           
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    focusedItem = ccListView.FocusedItem;
+                    if(focusedItem != null)
+                    {
+                        focusedCC = focusedItem.Tag as interopWord.ContentControl;
+                        interopWord.Range rng = focusedCC.Range;
+                        rng.Select();
+                    }
+                    break;
+                case MouseButtons.None:
+                    break;
+                case MouseButtons.Right:
+                    focusedItem = ccListView.FocusedItem;
+                    if (focusedItem != null && focusedItem.Bounds.Contains(e.Location))
+                    {
+                        ccListView_ContextMenuStrip.Show(Cursor.Position);
+                    }
+                    break;
+                case MouseButtons.Middle:
+                    break;
+                case MouseButtons.XButton1:
+                    break;
+                case MouseButtons.XButton2:
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void ccListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             
@@ -169,12 +214,18 @@ namespace XMLReader_Add_In
         }
         private void ListViewXMLParts_MouseEvent(object sender, MouseEventArgs e)
         {
-
+            
             Debug.WriteLine($"Mouse button {e.Button} pressed");
             // Reset the label text.
             XMLNodeValueLabel.Text = "None";
         }
 
+
         #endregion
+
+        private void ccRemapMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(ccListView.FocusedItem.Tag.ToString());
+        }
     }
 }

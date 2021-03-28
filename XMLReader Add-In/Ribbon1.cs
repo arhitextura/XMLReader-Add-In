@@ -46,6 +46,7 @@ namespace XMLReader_Add_In
         private void LoadContentButton_Click(object sender, RibbonControlEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine(Globals.ThisAddIn.currentDocument.Name);
+            
         }
     }
 }
