@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Configuration;
+
 using System.Windows.Forms;
 using System.Drawing; 
 using System.Diagnostics;
@@ -10,6 +10,7 @@ using System.Linq;
 using interopWord = Microsoft.Office.Interop.Word;
 using Microsoft.Office.Tools.Word;
 using Microsoft.Office.Core;
+using XMLReader_Add_In.Forms;
 
 namespace XMLReader_Add_In
 {
@@ -225,7 +226,12 @@ namespace XMLReader_Add_In
 
         private void ccRemapMenuItem_Click(object sender, EventArgs e)
         {
+            RemapForm remapForm = new RemapForm();
+            remapForm.Show();
+            ContentControl selectedCC = ccListView.FocusedItem.Tag as ContentControl;
+            //CustomXMLPart XMLPart = Globals.ThisAddIn.currentDocument.CustomXMLParts.SelectByNamespace
             MessageBox.Show(ccListView.FocusedItem.Tag.ToString());
+
         }
     }
 }

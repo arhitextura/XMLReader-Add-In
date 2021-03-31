@@ -46,5 +46,29 @@ namespace XMLReader_Add_In {
                 this["MappedCCForeColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://consoft.com/ProjectInfo")]
+        public string nameSpaceURI {
+            get {
+                return ((string)(this["nameSpaceURI"]));
+            }
+            set {
+                this["nameSpaceURI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CustomXMLPartID {
+            get {
+                return ((string)(this["CustomXMLPartID"]));
+            }
+            set {
+                this["CustomXMLPartID"] = value;
+            }
+        }
     }
 }

@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using Microsoft.Office.Interop.Word;
 using System.Windows.Forms;
-
+using XMLReader_Add_In.Forms;
 namespace XMLReader_Add_In
 {
     public partial class Ribbon1
     {
+        private Form nameSpaceManagerForm;
         private void Ribbon1_Load(object sender, RibbonUIEventArgs e)
         {
             
@@ -22,20 +23,11 @@ namespace XMLReader_Add_In
             
             
         }
-        private void ViewXMLLoadedXML (object sender, RibbonControlEventArgs e)
+        
+        private void viewCustomXMLParts (object sender, RibbonControlEventArgs ev)
         {
-            try
-            {
-                MessageBox.Show(Globals.ThisAddIn.currentDocument.Variables["CUSTOM_XML_ID"].Value);
-            }
-            catch (Exception err)
-            {
-
-                MessageBox.Show(err.Message);
-            }
-                
-            
-            
+            this.nameSpaceManagerForm = new NameSpaceManagerForm();
+            this.nameSpaceManagerForm.Show();
         }
 
         private void AddCustomXMLButton_Click(object sender, RibbonControlEventArgs e)
@@ -43,10 +35,17 @@ namespace XMLReader_Add_In
             Globals.ThisAddIn.addCustomXML();
         }
 
-        private void LoadContentButton_Click(object sender, RibbonControlEventArgs e)
+        private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(Globals.ThisAddIn.currentDocument.Name);
-            
+            try
+            {
+                MessageBox.Show(Globals.ThisAddIn.currentDocument.Variables["XML_ID"].Value);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message,"Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                
+            }
         }
     }
 }

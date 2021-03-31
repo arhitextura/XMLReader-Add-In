@@ -185,6 +185,18 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="Forms\NameSpaceManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NameSpaceManagerForm.Designer.cs">
+      <DependentUpon>NameSpaceManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RemapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RemapForm.Designer.cs">
+      <DependentUpon>RemapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -202,6 +214,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="XMLHandler.cs" />
+    <EmbeddedResource Include="Forms\NameSpaceManagerForm.resx">
+      <DependentUpon>NameSpaceManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RemapForm.resx">
+      <DependentUpon>RemapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="XMLBrowserForm.resx">
       <DependentUpon>XMLBrowserForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -261,6 +279,9 @@
   <ItemGroup>
     <None Include="resources\png\link_16px_16px.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\png\list_512px_512px.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -285,7 +306,7 @@
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Word" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Word" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Word\InstallRoot\Path#WINWORD.EXE" DebugInfoCommandLine="/x" AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
         <Host Name="Word" GeneratedCodeNamespace="XMLReader_Add_In" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
-          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" PublishedHash="80B2B248EB9E06B83E402FB57A63CBB09899E3B6" />
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" PublishedHash="80B2B248EB9E06B83E402FB57A63CBB09899E3B6" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
         </Host>
       </FlavorProperties>
     </VisualStudio>

@@ -6,12 +6,13 @@ using System.Xml.Linq;
 using System.Windows.Forms;
 using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
-
+using Microsoft.VisualStudio.Tools.Applications.Runtime;
 
 namespace XMLReader_Add_In
 {
     public partial class ThisAddIn
     {
+       
         private Form XMLBrowserForm;
 
         #region GLOBALS
@@ -19,7 +20,7 @@ namespace XMLReader_Add_In
         private string XMLFilePath = string.Empty;
         private XDocument _XML_ProjectInfo;
         public XDocument XML_ProjectInfo { get => _XML_ProjectInfo; set => _XML_ProjectInfo = value; }
-        private XNamespace DEFAULT_NAMESPACE = "PROJECT INFO ARCHICAD";
+        public XNamespace DEFAULT_NAMESPACE = Settings.Default.nameSpaceURI;
         #endregion
 
         /// <summary>
@@ -34,31 +35,37 @@ namespace XMLReader_Add_In
                 openFileDialog.Filter = "XML Files (*.xml)|*.xml|All files (*.*)|*.*";
                 openFileDialog.RestoreDirectory = true;
                 
-                
-                if(openFileDialog.ShowDialog() == DialogResult.OK)
+                if(_XML_ProjectInfo == null)
                 {
-                    XMLFilePath = openFileDialog.FileName;
-                    
-                    MessageBox.Show(XMLFilePath);
-
-                    this.XML_ProjectInfo = XDocument.Load(XMLFilePath);
-                    try
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        XML_ProjectInfo.Root.Name =
-                            DEFAULT_NAMESPACE + XML_ProjectInfo.Root.Name.LocalName;
+                        XMLFilePath = openFileDialog.FileName;
 
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show(e.ToString());
-                        
+                        MessageBox.Show(XMLFilePath);
 
+                        this.XML_ProjectInfo = XDocument.Load(XMLFilePath);
+                        try
+                        {
+                            XML_ProjectInfo.Root.Name =
+                                DEFAULT_NAMESPACE + XML_ProjectInfo.Root.Name.LocalName;
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.ToString());
+                        }
+                        this.XMLBrowserForm = new XMLBrowserForm();
+                        XMLBrowserForm.Text = ($"{XMLBrowserForm.Name} - {currentDocument.Name}");
+
+                        //TO-DO make it appear in fron of all windows
+                        this.XMLBrowserForm.Show();
                     }
+                } else
+                {
                     this.XMLBrowserForm = new XMLBrowserForm();
                     XMLBrowserForm.Text = ($"{XMLBrowserForm.Name} - {currentDocument.Name}");
-                    //TO-DO make it appear in fron of all windows
                     this.XMLBrowserForm.Show();
                 }
+                
             }
         }
 
@@ -74,11 +81,11 @@ namespace XMLReader_Add_In
                 {
                     string xmlString = XML_ProjectInfo.ToString();
                     Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString, missing);
-                    System.Diagnostics.Debug.WriteLine(customXML.NamespaceURI);
+                    string id = customXML.Id;
+                    currentDocument.Variables.Add("XML_ID", id);
+                    
                 }
             }
-            
-            MessageBox.Show(currentDocument.CustomXMLParts.SelectByNamespace(DEFAULT_NAMESPACE.ToString()).ToString());
         }
 
         #region Event handling functions
@@ -122,9 +129,6 @@ namespace XMLReader_Add_In
         {
             this.Startup += new System.EventHandler(ThisAddIn_Startup);
             this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
-            
-
-
         }
         
         #endregion

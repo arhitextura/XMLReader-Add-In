@@ -8,5 +8,11 @@
     <Setting Name="MappedCCForeColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">#33704a</Value>
     </Setting>
+    <Setting Name="nameSpaceURI" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://consoft.com/ProjectInfo</Value>
+    </Setting>
+    <Setting Name="CustomXMLPartID" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

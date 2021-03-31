@@ -111,7 +111,7 @@ namespace XMLReader_Add_In
             this.ListViewXMLParts.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.ListViewXMLParts.Location = new System.Drawing.Point(0, 0);
             this.ListViewXMLParts.Name = "ListViewXMLParts";
-            this.ListViewXMLParts.Size = new System.Drawing.Size(295, 526);
+            this.ListViewXMLParts.Size = new System.Drawing.Size(291, 526);
             this.ListViewXMLParts.TabIndex = 5;
             this.ListViewXMLParts.TileSize = new System.Drawing.Size(50, 50);
             this.ListViewXMLParts.UseCompatibleStateImageBehavior = false;
@@ -125,7 +125,7 @@ namespace XMLReader_Add_In
             // columnValueHeader
             // 
             this.columnValueHeader.Text = "Value";
-            this.columnValueHeader.Width = 162;
+            this.columnValueHeader.Width = 127;
             // 
             // columnTagHeader
             // 
@@ -172,12 +172,12 @@ namespace XMLReader_Add_In
             // contentControlHeader
             // 
             this.contentControlHeader.Text = "Title";
-            this.contentControlHeader.Width = 74;
+            this.contentControlHeader.Width = 104;
             // 
             // mappingHeader
             // 
             this.mappingHeader.Text = "Mapping";
-            this.mappingHeader.Width = 198;
+            this.mappingHeader.Width = 344;
             // 
             // ccListView_ContextMenuStrip
             // 
@@ -190,14 +190,18 @@ namespace XMLReader_Add_In
             // 
             // ccRemapMenuItem
             // 
+            this.ccRemapMenuItem.AutoSize = false;
+            this.ccRemapMenuItem.Checked = true;
+            this.ccRemapMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ccRemapMenuItem.Image = global::XMLReader_Add_In.Properties.Resources.link_16px_16px;
             this.ccRemapMenuItem.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.ccRemapMenuItem.ImageTransparentColor = System.Drawing.Color.White;
             this.ccRemapMenuItem.Name = "ccRemapMenuItem";
             this.ccRemapMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.ccRemapMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.ccRemapMenuItem.Size = new System.Drawing.Size(155, 22);
             this.ccRemapMenuItem.Text = "Remap ...";
-            this.ccRemapMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.ccRemapMenuItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.ccRemapMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.ccRemapMenuItem.Click += new System.EventHandler(this.ccRemapMenuItem_Click);
             // 
             // XMLBrowserForm
