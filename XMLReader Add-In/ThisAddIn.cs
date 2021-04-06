@@ -69,7 +69,7 @@ namespace XMLReader_Add_In
             }
         }
 
-        internal void addCustomXML ()
+        internal void AddCustomXML()
         {
             if (XML_ProjectInfo == null)
             {
@@ -79,10 +79,13 @@ namespace XMLReader_Add_In
             {
                 if(currentDocument.CustomXMLParts.SelectByNamespace(DEFAULT_NAMESPACE.ToString()).Count < 1)
                 {
+                   
                     string xmlString = XML_ProjectInfo.ToString();
-                    Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString, missing);
+                    Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString);
+                    customXML.NamespaceManager.AddNamespace("ns", @"http://consoft.ro/ProjectInfo-v1.xml");
                     string id = customXML.Id;
                     currentDocument.Variables.Add("XML_ID", id);
+                    
                     
                 }
             }

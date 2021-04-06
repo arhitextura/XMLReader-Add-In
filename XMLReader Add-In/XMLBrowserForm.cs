@@ -228,7 +228,7 @@ namespace XMLReader_Add_In
         {
             Microsoft.Office.Interop.Word.ContentControl selectedCC = ccListView.FocusedItem.Tag as Microsoft.Office.Interop.Word.ContentControl;
             RemapForm remapForm = new RemapForm(selectedCC);
-            remapForm.Show();
+            remapForm.ShowDialog();
             //CustomXMLPart XMLPart = Globals.ThisAddIn.currentDocument.CustomXMLParts.SelectByNamespace
             MessageBox.Show(ccListView.FocusedItem.Tag.ToString());
 

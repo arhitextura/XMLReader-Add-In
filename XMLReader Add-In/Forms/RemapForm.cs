@@ -20,6 +20,8 @@ namespace XMLReader_Add_In.Forms
         private CustomXMLPart customXMLPart;
         private Microsoft.Office.Interop.Word.ContentControl selectedCC;
         private string selectedXPath = string.Empty;
+        private CustomXMLNode selectedNode;
+
         public RemapForm(Microsoft.Office.Interop.Word.ContentControl _cc)
         {
             selectedCC = _cc;
@@ -64,6 +66,7 @@ namespace XMLReader_Add_In.Forms
 
         private void Populate_customXMLPartTreeView(CustomXMLPart _customXMLPart)
         {
+            System.Diagnostics.Debug.WriteLine($"Selexcted nodes count: {_customXMLPart.SelectNodes("/*").Count}");
             XDocument XDoc = XDocument.Parse(_customXMLPart.XML);
             //Initialize the root of treeview
             TreeNode RootNode = new TreeNode();
@@ -73,8 +76,19 @@ namespace XMLReader_Add_In.Forms
             //Build the TreeView
             XMLHandler.BuildNodes(RootNode, XDoc.Root);
         }
+        private void Populate_customXMLPartTreeView(CustomXMLNode customXMLNode)
+        {
+            TreeNode RootNode = new TreeNode();
+            RootNode.Text = customXMLNode.BaseName;
+            RootNode.Tag = customXMLNode;
+            customXMLPartTreeView.Nodes.Add(RootNode);
+            XMLHandler.BuildNodes(RootNode, customXMLNode);
+        }
 
-        private void customXMLComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        #region Events in Remap Form
+
+        
+        private void CustomXMLComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (customXMLComboBox.SelectedItem != null)
             {
@@ -83,7 +97,8 @@ namespace XMLReader_Add_In.Forms
                 
                 //Load the custom Xml Part and transform it into XDocument
                 customXMLPart = ((ComboBoxItem)customXMLComboBox.SelectedItem).Tag as CustomXMLPart;
-                Populate_customXMLPartTreeView(customXMLPart);
+                CustomXMLNode node = customXMLPart.SelectSingleNode("/*");
+                Populate_customXMLPartTreeView(node);
             }
 
         }
@@ -93,26 +108,32 @@ namespace XMLReader_Add_In.Forms
             // TODO MAke remapping to work
             MessageBox.Show(selectedCC.Title);
             string prefix = this.customXMLPart.NamespaceURI;
-            if(selectedXPath != string.Empty)
+
+
+            if(selectedNode != null)
             {
-                selectedCC.XMLMapping.SetMapping(selectedXPath, prefix, customXMLPart);
+                selectedCC.XMLMapping.SetMappingByNode(selectedNode);
             } else
             {
                 MessageBox.Show("Please select a node from the xml treeview");
             }
+            this.Close();
         }
 
-        private void customXMLPartTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void CustomXMLPartTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             switch (e.Action)
             {
                 case TreeViewAction.ByMouse:
-                    XElement selectedNode = e.Node.Tag as XElement;
-                    selectedXPath = Utils.ReturnXPath(selectedNode);
+                    selectedNode = e.Node.Tag as CustomXMLNode;
+                    selectedXPath = selectedNode.XPath;
                     break;
             }
         }
+        #endregion
     }
+
+
     public class ComboboxItem : ComboBoxItem
     {
         public string Text { get; set; }

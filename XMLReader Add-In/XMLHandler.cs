@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Core;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace XMLReader_Add_In
 {
     public class XMLHandler
     {
-        
+
         /// <summary>
         /// Builds a tree view based on XML XDoc ant existing TreeView
         /// </summary>
@@ -27,18 +23,21 @@ namespace XMLReader_Add_In
             if (element.HasElements)
             {
                 childTreeNode.Text = element.Name.LocalName;
-            } else
+            }
+            else
             {
                 // It is a leaf because no it has no elements, show the value inside the tag
-                if(element.Value.Equals(""))
+                if (element.Value.Equals(""))
                 {
                     childTreeNode.Text = element.Name.LocalName;
-                } else
+                }
+                else
                 {
                     childTreeNode.NodeFont = new System.Drawing.Font(TreeView.DefaultFont, FontStyle.Bold);
                     childTreeNode.Text = element.Value;
                 }
             }
+
             //Each treeNode indicates to the XDocument element, so later we can retrieve the XPath of that element
             childTreeNode.Tag = element;
             foreach (XElement child in element.Elements())
@@ -49,6 +48,41 @@ namespace XMLReader_Add_In
             treeNode.Nodes.Add(childTreeNode);
         }
 
+        /// <summary>
+        /// Builds a tree view based on CustomXMLNode and an existing TreeView Node
+        /// </summary>
+        /// <param name="treeNode">The treeView root element that should be built</param>
+        /// <param name="_customXmlNode">The Starting XElement in the XML</param>
+        /// <example>BuildNodes(RootTreeNode, XMLElement)</example>
+        public static void BuildNodes(TreeNode treeNode, CustomXMLNode _customXmlNode)
+        {
+            //URGENT Fix the tripled nodes in the treeview
+            /*Root
+             * + -
+             * + - Some Value
+             * + - 
+             *
+             *
+             */
+            TreeNode childTreeNode = new TreeNode();
+            if (!_customXmlNode.HasChildNodes())
+            {
+                childTreeNode.Text = _customXmlNode.NodeValue;
+                childTreeNode.Tag = _customXmlNode.ParentNode;
+            } else
+            {
+                childTreeNode.Text = _customXmlNode.BaseName;
+                childTreeNode.Tag = _customXmlNode;
+
+            }
+            foreach (CustomXMLNode item in _customXmlNode.ChildNodes)
+            {
+                
+                BuildNodes(childTreeNode, item);
+            }
+            treeNode.Nodes.Add(childTreeNode);
+
+        }
 
         public static void RemapCustomXMLPart(CustomXMLPart xmlPart)
         {
@@ -59,21 +93,16 @@ namespace XMLReader_Add_In
                 {
                     if (openFileDialog.ShowDialog() == DialogResult.OK)
                     {
-
                         XDocument tempXML = XDocument.Load(openFileDialog.FileName);
                         tempXML.Root.Name =
                                 Globals.ThisAddIn.DEFAULT_NAMESPACE + tempXML.Root.Name.LocalName;
                         xmlPart.Delete();
                         Globals.ThisAddIn.currentDocument.CustomXMLParts.Add(tempXML.ToString());
-                        
                     }
                 }
             }
         }
-        public static void RemapCustomXMLPart(ContentControl cc)
-        {
 
-        }
     }
 
 }

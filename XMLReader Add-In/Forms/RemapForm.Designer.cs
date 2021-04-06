@@ -41,7 +41,7 @@ namespace XMLReader_Add_In.Forms
             this.customXMLPartTreeView.Name = "customXMLPartTreeView";
             this.customXMLPartTreeView.Size = new System.Drawing.Size(265, 476);
             this.customXMLPartTreeView.TabIndex = 0;
-            this.customXMLPartTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.customXMLPartTreeView_AfterSelect);
+            this.customXMLPartTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.CustomXMLPartTreeView_AfterSelect);
             // 
             // button1
             // 
@@ -70,7 +70,7 @@ namespace XMLReader_Add_In.Forms
             this.customXMLComboBox.Name = "customXMLComboBox";
             this.customXMLComboBox.Size = new System.Drawing.Size(265, 21);
             this.customXMLComboBox.TabIndex = 3;
-            this.customXMLComboBox.SelectedIndexChanged += new System.EventHandler(this.customXMLComboBox_SelectedIndexChanged);
+            this.customXMLComboBox.SelectedIndexChanged += new System.EventHandler(this.CustomXMLComboBox_SelectedIndexChanged);
             // 
             // RemapForm
             // 

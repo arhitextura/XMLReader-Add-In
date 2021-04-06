@@ -32,11 +32,12 @@ namespace XMLReader_Add_In
 
         private void AddCustomXMLButton_Click(object sender, RibbonControlEventArgs e)
         {
-            Globals.ThisAddIn.addCustomXML();
+            Globals.ThisAddIn.AddCustomXML();
         }
 
         private void button1_Click_1(object sender, RibbonControlEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(Globals.ThisAddIn.XML_ProjectInfo);
             try
             {
                 MessageBox.Show(Globals.ThisAddIn.currentDocument.Variables["XML_ID"].Value);
