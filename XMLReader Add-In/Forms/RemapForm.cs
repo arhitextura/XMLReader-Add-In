@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,13 +17,19 @@ namespace XMLReader_Add_In.Forms
 
     public partial class RemapForm : Form
     {
-        
-        public RemapForm()
+        private CustomXMLPart customXMLPart;
+        private Microsoft.Office.Interop.Word.ContentControl selectedCC;
+        private string selectedXPath = string.Empty;
+        public RemapForm(Microsoft.Office.Interop.Word.ContentControl _cc)
         {
+            selectedCC = _cc;
             InitializeComponent();
             Populate_customXMLComboBox();
-            Populate_customXMLPartTreeView();
+
+            customXMLPart = ((ComboBoxItem)customXMLComboBox.Items[0]).Tag as CustomXMLPart;
+            
         }
+
         private void Populate_customXMLComboBox()
         {
             foreach (CustomXMLPart part in Globals.ThisAddIn.currentDocument.CustomXMLParts)
@@ -43,26 +50,67 @@ namespace XMLReader_Add_In.Forms
             }
 
         }
-        private void Populate_customXMLPartTreeView()
+
+
+        private void Populate_customXMLPartTreeView(XDocument XDoc)
         {
-            
-            
+            TreeNode RootNode = new TreeNode();
+            RootNode.Text = XDoc.Root.Name.LocalName;
+            RootNode.Tag = XDoc.Root;
+            customXMLPartTreeView.Nodes.Add(RootNode);
+            //Build the TreeView
+            XMLHandler.BuildNodes(RootNode, XDoc.Root);
         }
+
+        private void Populate_customXMLPartTreeView(CustomXMLPart _customXMLPart)
+        {
+            XDocument XDoc = XDocument.Parse(_customXMLPart.XML);
+            //Initialize the root of treeview
+            TreeNode RootNode = new TreeNode();
+            RootNode.Text = XDoc.Root.Name.LocalName;
+            RootNode.Tag = XDoc.Root;
+            customXMLPartTreeView.Nodes.Add(RootNode);
+            //Build the TreeView
+            XMLHandler.BuildNodes(RootNode, XDoc.Root);
+        }
+
         private void customXMLComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-
             if (customXMLComboBox.SelectedItem != null)
             {
+                //Clear the TreeView
                 customXMLPartTreeView.Nodes.Clear();
-                TreeNode RootNode = new TreeNode();
-                RootNode.Text = "Root";
-                customXMLPartTreeView.Nodes.Add(RootNode);
-                var customXMLPart = ((ComboBoxItem)customXMLComboBox.SelectedItem).Tag as CustomXMLPart;
-                Debug.WriteLine(customXMLPart.XML);
-                XMLHandler.BuildNodes(RootNode, customXMLPart);
+                
+                //Load the custom Xml Part and transform it into XDocument
+                customXMLPart = ((ComboBoxItem)customXMLComboBox.SelectedItem).Tag as CustomXMLPart;
+                Populate_customXMLPartTreeView(customXMLPart);
             }
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // TODO MAke remapping to work
+            MessageBox.Show(selectedCC.Title);
+            string prefix = this.customXMLPart.NamespaceURI;
+            if(selectedXPath != string.Empty)
+            {
+                selectedCC.XMLMapping.SetMapping(selectedXPath, prefix, customXMLPart);
+            } else
+            {
+                MessageBox.Show("Please select a node from the xml treeview");
+            }
+        }
+
+        private void customXMLPartTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case TreeViewAction.ByMouse:
+                    XElement selectedNode = e.Node.Tag as XElement;
+                    selectedXPath = Utils.ReturnXPath(selectedNode);
+                    break;
+            }
         }
     }
     public class ComboboxItem : ComboBoxItem

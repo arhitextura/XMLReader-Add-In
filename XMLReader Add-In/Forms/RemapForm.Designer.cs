@@ -39,21 +39,23 @@ namespace XMLReader_Add_In.Forms
             // 
             this.customXMLPartTreeView.Location = new System.Drawing.Point(12, 39);
             this.customXMLPartTreeView.Name = "customXMLPartTreeView";
-            this.customXMLPartTreeView.Size = new System.Drawing.Size(258, 439);
+            this.customXMLPartTreeView.Size = new System.Drawing.Size(265, 476);
             this.customXMLPartTreeView.TabIndex = 0;
+            this.customXMLPartTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.customXMLPartTreeView_AfterSelect);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 484);
+            this.button1.Location = new System.Drawing.Point(12, 521);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
             this.button1.Text = "Remap";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(93, 484);
+            this.button2.Location = new System.Drawing.Point(93, 521);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -66,7 +68,7 @@ namespace XMLReader_Add_In.Forms
             this.customXMLComboBox.FormattingEnabled = true;
             this.customXMLComboBox.Location = new System.Drawing.Point(12, 12);
             this.customXMLComboBox.Name = "customXMLComboBox";
-            this.customXMLComboBox.Size = new System.Drawing.Size(258, 21);
+            this.customXMLComboBox.Size = new System.Drawing.Size(265, 21);
             this.customXMLComboBox.TabIndex = 3;
             this.customXMLComboBox.SelectedIndexChanged += new System.EventHandler(this.customXMLComboBox_SelectedIndexChanged);
             // 
@@ -74,7 +76,7 @@ namespace XMLReader_Add_In.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(286, 519);
+            this.ClientSize = new System.Drawing.Size(289, 556);
             this.Controls.Add(this.customXMLComboBox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);

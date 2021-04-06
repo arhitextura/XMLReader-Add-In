@@ -49,8 +49,8 @@ namespace XMLReader_Add_In
             XDocument XMLFileRoot = Globals.ThisAddIn.XML_ProjectInfo;
             XElement XMLRoot = XMLFileRoot.Root;
             TreeNode RootNode = new TreeNode();
+            RootNode.Text = XMLFileRoot.Root.Name.LocalName;
             RootNode.Tag = XMLFileRoot.Root;
-            RootNode.Text = XMLFileRoot.Root.Name.ToString();
             treeView1.Nodes.Add(RootNode);
             foreach (XElement rootChild in XMLRoot.Elements())
             {
@@ -198,7 +198,7 @@ namespace XMLReader_Add_In
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             
-            switch ((e.Action))
+            switch (e.Action)
             {
                 case TreeViewAction.ByMouse:
                     
@@ -226,9 +226,9 @@ namespace XMLReader_Add_In
 
         private void ccRemapMenuItem_Click(object sender, EventArgs e)
         {
-            RemapForm remapForm = new RemapForm();
+            Microsoft.Office.Interop.Word.ContentControl selectedCC = ccListView.FocusedItem.Tag as Microsoft.Office.Interop.Word.ContentControl;
+            RemapForm remapForm = new RemapForm(selectedCC);
             remapForm.Show();
-            ContentControl selectedCC = ccListView.FocusedItem.Tag as ContentControl;
             //CustomXMLPart XMLPart = Globals.ThisAddIn.currentDocument.CustomXMLParts.SelectByNamespace
             MessageBox.Show(ccListView.FocusedItem.Tag.ToString());
 

@@ -34,7 +34,7 @@ namespace XMLReader_Add_In.Forms
         }
         private void nameSpaceListView_MouseEvent(object sender, MouseEventArgs ev)
         {
-            CustomXMLPart customXMLPart;
+            
             switch (ev.Button)
             {
                 case MouseButtons.Left:
