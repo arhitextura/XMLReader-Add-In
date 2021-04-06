@@ -19,7 +19,6 @@ namespace XMLReader_Add_In.Forms
     {
         private CustomXMLPart customXMLPart;
         private Microsoft.Office.Interop.Word.ContentControl selectedCC;
-        private string selectedXPath = string.Empty;
         private CustomXMLNode selectedNode;
 
         public RemapForm(Microsoft.Office.Interop.Word.ContentControl _cc)
@@ -46,7 +45,6 @@ namespace XMLReader_Add_In.Forms
             {
                 if (item.Text == Globals.ThisAddIn.DEFAULT_NAMESPACE)
                 {
-                    
                     customXMLComboBox.SelectedItem = item;
                 }
             }
@@ -105,10 +103,7 @@ namespace XMLReader_Add_In.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // TODO MAke remapping to work
             MessageBox.Show(selectedCC.Title);
-            string prefix = this.customXMLPart.NamespaceURI;
-
 
             if(selectedNode != null)
             {
@@ -126,7 +121,6 @@ namespace XMLReader_Add_In.Forms
             {
                 case TreeViewAction.ByMouse:
                     selectedNode = e.Node.Tag as CustomXMLNode;
-                    selectedXPath = selectedNode.XPath;
                     break;
             }
         }

@@ -56,32 +56,30 @@ namespace XMLReader_Add_In
         /// <example>BuildNodes(RootTreeNode, XMLElement)</example>
         public static void BuildNodes(TreeNode treeNode, CustomXMLNode _customXmlNode)
         {
-            //URGENT Fix the tripled nodes in the treeview
-            /*Root
-             * + -
-             * + - Some Value
-             * + - 
-             *
-             *
-             */
             TreeNode childTreeNode = new TreeNode();
-            if (!_customXmlNode.HasChildNodes())
+            
+            if(_customXmlNode.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeCData)
             {
+                //If it is a CDATA Type must be some sort of a value inside that node and will not have any childs
                 childTreeNode.Text = _customXmlNode.NodeValue;
                 childTreeNode.Tag = _customXmlNode.ParentNode;
-            } else
+                
+            } else if (_customXmlNode.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeElement)
             {
                 childTreeNode.Text = _customXmlNode.BaseName;
                 childTreeNode.Tag = _customXmlNode;
-
             }
+            
             foreach (CustomXMLNode item in _customXmlNode.ChildNodes)
             {
-                
+                if(item.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeText)
+                {
+                    continue;
+                }
                 BuildNodes(childTreeNode, item);
             }
-            treeNode.Nodes.Add(childTreeNode);
 
+            treeNode.Nodes.Add(childTreeNode);
         }
 
         public static void RemapCustomXMLPart(CustomXMLPart xmlPart)
