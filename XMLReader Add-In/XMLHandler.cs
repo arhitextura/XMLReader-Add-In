@@ -4,6 +4,7 @@ using Microsoft.Office.Interop.Word;
 using Microsoft.Office.Core;
 using System.Drawing;
 using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace XMLReader_Add_In
 {
@@ -33,7 +34,7 @@ namespace XMLReader_Add_In
                 }
                 else
                 {
-                    childTreeNode.NodeFont = new System.Drawing.Font(TreeView.DefaultFont, FontStyle.Bold);
+                    childTreeNode.NodeFont = new System.Drawing.Font(System.Windows.Forms.TreeView.DefaultFont, FontStyle.Bold);
                     childTreeNode.Text = element.Value;
                 }
             }
@@ -103,6 +104,38 @@ namespace XMLReader_Add_In
             }
         }
 
-    }
+        public static void Populate_customXMLComboBoxWithCustomXMLParts(System.Windows.Forms.ComboBox customXMLComboBox, bool autoselect = false)
+        {
+            customXMLComboBox.Items.Clear();
+            foreach (CustomXMLPart part in Globals.ThisAddIn.currentDocument.CustomXMLParts)
+            {
+                ComboboxItem cbItem = new ComboboxItem();
+                cbItem.Text = part.NamespaceURI;
+                cbItem.Tag = part;
+                customXMLComboBox.Items.Add(cbItem);
+            }
+            if (autoselect)
+            {
+                foreach (ComboboxItem item in customXMLComboBox.Items)
+                {
+                    if (item.Text == Globals.ThisAddIn.DEFAULT_NAMESPACE)
+                    {
+                        customXMLComboBox.SelectedItem = item;
+                    }
+                }
+            }
 
+        }
+
+    }
+    public class ComboboxItem : ComboBoxItem
+    {
+        public string Text { get; set; }
+        public object Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
+        }
+    }
 }

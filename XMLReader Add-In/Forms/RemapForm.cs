@@ -27,31 +27,12 @@ namespace XMLReader_Add_In.Forms
             InitializeComponent();
             this.TopMost = true;
 
-            Populate_customXMLComboBox();
+            XMLHandler.Populate_customXMLComboBoxWithCustomXMLParts(customXMLPartsComboBox, true);
 
-            customXMLPart = ((ComboBoxItem)customXMLComboBox.Items[0]).Tag as CustomXMLPart;
+            customXMLPart = ((ComboBoxItem)customXMLPartsComboBox.Items[0]).Tag as CustomXMLPart;
             
         }
 
-        private void Populate_customXMLComboBox()
-        {
-            foreach (CustomXMLPart part in Globals.ThisAddIn.currentDocument.CustomXMLParts)
-            {
-                ComboboxItem cbItem = new ComboboxItem();
-                cbItem.Text = part.NamespaceURI;
-                cbItem.Tag = part;
-                customXMLComboBox.Items.Add(cbItem);
-                
-            }
-            foreach (ComboboxItem item in customXMLComboBox.Items)
-            {
-                if (item.Text == Globals.ThisAddIn.DEFAULT_NAMESPACE)
-                {
-                    customXMLComboBox.SelectedItem = item;
-                }
-            }
-
-        }
 
 
         private void Populate_customXMLPartTreeView(XDocument XDoc)
@@ -92,13 +73,13 @@ namespace XMLReader_Add_In.Forms
         
         private void CustomXMLComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (customXMLComboBox.SelectedItem != null)
+            if (customXMLPartsComboBox.SelectedItem != null)
             {
                 //Clear the TreeView
                 customXMLPartTreeView.Nodes.Clear();
                 
                 //Load the custom Xml Part and transform it into XDocument
-                customXMLPart = ((ComboBoxItem)customXMLComboBox.SelectedItem).Tag as CustomXMLPart;
+                customXMLPart = ((ComboBoxItem)customXMLPartsComboBox.SelectedItem).Tag as CustomXMLPart;
                 CustomXMLNode node = customXMLPart.SelectSingleNode("/*");
                 Populate_customXMLPartTreeView(node);
             }
@@ -137,15 +118,4 @@ namespace XMLReader_Add_In.Forms
         #endregion
     }
 
-
-    public class ComboboxItem : ComboBoxItem
-    {
-        public string Text { get; set; }
-        public object Value { get; set; }
-
-        public override string ToString()
-        {
-            return Text;
-        }
-    }
 }

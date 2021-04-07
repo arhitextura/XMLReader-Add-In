@@ -28,9 +28,9 @@ namespace XMLReader_Add_In
         {
 
             InitializeComponent();
-            InitTreeView();
             InitializeListView();
             InitializeContentControlListView();
+            XMLHandler.Populate_customXMLComboBoxWithCustomXMLParts(this.customXMLPartsComboBox);
             this.TopMost = true;
 
             ListViewXMLParts.MouseUp += new MouseEventHandler(ListViewXMLParts_MouseEvent);
@@ -44,31 +44,6 @@ namespace XMLReader_Add_In
         }
 
 
-        private void XMLBrowserFormActivate(object sender, EventArgs e)
-        {
-            
-            InitializeListView();
-            InitializeContentControlListView();
-        }
-        private void ThisDocument_ActivateEvent(object sender, WindowEventArgs e)
-        {
-            Globals.ThisAddIn.currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
-            extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
-            InitializeContentControlListView();
-        }
-        private void InitTreeView()
-        {
-            XDocument XMLFileRoot = Globals.ThisAddIn.XML_ProjectInfo;
-            XElement XMLRoot = XMLFileRoot.Root;
-            TreeNode RootNode = new TreeNode();
-            RootNode.Text = XMLFileRoot.Root.Name.LocalName;
-            RootNode.Tag = XMLFileRoot.Root;
-            treeView1.Nodes.Add(RootNode);
-            foreach (XElement rootChild in XMLRoot.Elements())
-            {
-                BuildNodes(RootNode, rootChild);
-            }
-        }
 
         public void InitializeContentControlListView()
         {
@@ -112,35 +87,35 @@ namespace XMLReader_Add_In
         /// </summary>
         private void InitializeListView()
         {
-            //CustomXMLPart xmlPart = Globals.ThisAddIn.existingprojectInfoXmlPart;
-            //if (xmlPart != null)
-            //{
-            //    foreach (CustomXMLNode node in xmlPart.SelectNodes("/*"))
-            //    {
-            //        if (node.NodeType != MsoCustomXMLNodeType.msoCustomXMLNodeText)
-            //        {
-            //            continue;
-            //        }
-            //        ListViewItem ListViewItem = new ListViewItem(node.NodeValue);
-            //        ListViewXMLParts.Items.Add(ListViewItem);
-            //        Debug.WriteLine(node.NodeValue);
-            //    }
-            //}
-            XElement XMLRoot = Globals.ThisAddIn.XML_ProjectInfo.Root;
-            IEnumerable<XElement> UIKeys = XMLRoot.Descendants("UIKey");
-
-            foreach (XElement UIKey in UIKeys)
+            CustomXMLPart xmlPart = Globals.ThisAddIn.existingprojectInfoXmlPart;
+            if (xmlPart != null)
             {
-
-                ListViewItem UIKeyItem = new ListViewItem(UIKey.Value);
-                XElement keyValueElement = UIKey.Parent.Element("value");
-
-                UIKeyItem.SubItems.Add(keyValueElement.Value);
-                UIKeyItem.Tag = keyValueElement;
-                UIKeyItem.SubItems.Add(UIKeyItem.Tag.ToString());
-                ListViewXMLParts.Items.Add(UIKeyItem);
-
+                foreach (CustomXMLNode node in xmlPart.SelectNodes("/*"))
+                {
+                    if (node.NodeType != MsoCustomXMLNodeType.msoCustomXMLNodeText)
+                    {
+                        continue;
+                    }
+                    ListViewItem ListViewItem = new ListViewItem(node.NodeValue);
+                    ListViewXMLParts.Items.Add(ListViewItem);
+                    Debug.WriteLine(node.NodeValue);
+                }
             }
+            //XElement XMLRoot = Globals.ThisAddIn.XML_ProjectInfo.Root;
+            //IEnumerable<XElement> UIKeys = XMLRoot.Descendants("UIKey");
+
+            //foreach (XElement UIKey in UIKeys)
+            //{
+
+            //    ListViewItem UIKeyItem = new ListViewItem(UIKey.Value);
+            //    XElement keyValueElement = UIKey.Parent.Element("value");
+
+            //    UIKeyItem.SubItems.Add(keyValueElement.Value);
+            //    UIKeyItem.Tag = keyValueElement;
+            //    UIKeyItem.SubItems.Add(UIKeyItem.Tag.ToString());
+            //    ListViewXMLParts.Items.Add(UIKeyItem);
+
+            //}
         }
 
         /// <summary>
@@ -187,14 +162,22 @@ namespace XMLReader_Add_In
         }
 
 
-        private void ExtendedDocument_ContentControlBeforeStoreUpdate(interopWord.ContentControl ContentControl, ref string Content)
+        
+
+        #region Events Handlers
+        private void XMLBrowserFormActivate(object sender, EventArgs e)
         {
-            Debug.WriteLine(ContentControl.Title);
+            InitializeListView();
             InitializeContentControlListView();
+            XMLHandler.Populate_customXMLComboBoxWithCustomXMLParts(this.customXMLPartsComboBox);
         }
-
-        #region Events
-
+        private void ThisDocument_ActivateEvent(object sender, WindowEventArgs e)
+        {
+            Globals.ThisAddIn.currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
+            extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
+            InitializeContentControlListView();
+            
+        }
         private void ccListView_MouseEvent(object sender, MouseEventArgs e)
         {
             interopWord.ContentControl focusedCC = null;
@@ -230,12 +213,15 @@ namespace XMLReader_Add_In
                     break;
             }
         }
+        private void ExtendedDocument_ContentControlBeforeStoreUpdate(interopWord.ContentControl ContentControl, ref string Content)
+        {
+            Debug.WriteLine(ContentControl.Title);
+            InitializeContentControlListView();
+        }
         private void ccListView_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
-
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
 
@@ -271,7 +257,11 @@ namespace XMLReader_Add_In
             RemapForm remapForm = new RemapForm(selectedCC);
             remapForm.ShowDialog();
             //CustomXMLPart XMLPart = Globals.ThisAddIn.currentDocument.CustomXMLParts.SelectByNamespace
-            MessageBox.Show(ccListView.FocusedItem.Tag.ToString());
+            
+        }
+
+        private void customXMLPartsComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

@@ -122,7 +122,10 @@ namespace XMLReader_Add_In
         }
         void DocumentBeforeClose(Word.Document doc, ref bool Cancel) 
         {
-            this.XMLBrowserForm.TopMost = false;    
+            if (this.XMLBrowserForm != null)
+            {
+                this.XMLBrowserForm.TopMost = false;    
+            }
         }
         #endregion
 
