@@ -6,6 +6,8 @@ using System.Text;
 using Microsoft.Office.Interop.Word;
 using System.Windows.Forms;
 using XMLReader_Add_In.Forms;
+using Office = Microsoft.Office.Core;
+
 namespace XMLReader_Add_In
 {
     public partial class Ribbon1
@@ -17,11 +19,22 @@ namespace XMLReader_Add_In
         }
 
         private void button1_Click(object sender, RibbonControlEventArgs e)
-        {
-            
+        {   
+            //TODO Fix  the CustomXML part loader
+            // If there is a custom XML part loaded in this document than load the XMLBrowserForm with 
+            // this existing custom part
+            if(Globals.ThisAddIn.existingprojectInfoXmlPart != null)
+            {
+
+            }
+            // If there is no XML Custom Part than prompt to load an XML
+            // and atach it automatically then load the XMLBrowserForm with the new custom xml part.
+            else
+            {
+
+            }
+
             Globals.ThisAddIn.ToggleOpenFileDialog();
-            
-            
         }
         
         private void viewCustomXMLParts (object sender, RibbonControlEventArgs ev)

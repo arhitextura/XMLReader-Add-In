@@ -12,8 +12,10 @@ namespace XMLReader_Add_In
 {
     public partial class ThisAddIn
     {
-       
-        private Form XMLBrowserForm;
+
+        public Office.CustomXMLPart existingprojectInfoXmlPart;
+        public Form XMLBrowserForm;
+        
 
         #region GLOBALS
         public Word.Document currentDocument;
@@ -83,8 +85,13 @@ namespace XMLReader_Add_In
                     string xmlString = XML_ProjectInfo.ToString();
                     Office.CustomXMLPart customXML = currentDocument.CustomXMLParts.Add(xmlString);
                     customXML.NamespaceManager.AddNamespace("ns", @"http://consoft.ro/ProjectInfo-v1.xml");
-                    string id = customXML.Id;
-                    currentDocument.Variables.Add("XML_ID", id);
+                    if (currentDocument.Variables["XML_ID"] == null)
+                    {
+                        currentDocument.Variables.Add("XML_ID", customXML.Id);
+                    } else
+                    {
+                        currentDocument.Variables["XML_ID"].Value = customXML.Id;
+                    }
                     
                     
                 }
@@ -92,27 +99,45 @@ namespace XMLReader_Add_In
         }
 
         #region Event handling functions
-        void setCurrentDocument(Word.Document doc)
+        void SetCurrentDocument(Word.Document doc)
         {
             currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
-            
-            
         }
-        void setCurrentDocument(Word.Document doc, Word.Window wn)
+        void SetCurrentDocument(Word.Document doc, Word.Window wn)
         {
             currentDocument = Globals.ThisAddIn.Application.ActiveDocument;
-
+        }
+        void SelectExistingXMLPart(Word.Document doc)
+        {
+            try
+            {
+                string _customXMLPartID = doc.Variables["XML_ID"].Value;
+                existingprojectInfoXmlPart = doc.CustomXMLParts.SelectByID(_customXMLPartID);
+            }
+            catch (Exception Err)
+            {
+                MessageBox.Show("No custom XML Part found that was imported from Archicad.");
+                //throw new KeyNotFoundException("No custom XML part found in this document");
+            }
+        }
+        void DocumentBeforeClose(Word.Document doc, ref bool Cancel) 
+        {
+            this.XMLBrowserForm.TopMost = false;    
         }
         #endregion
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             this.Application.DocumentOpen +=
-            new Word.ApplicationEvents4_DocumentOpenEventHandler(setCurrentDocument);
+            new Word.ApplicationEvents4_DocumentOpenEventHandler(SetCurrentDocument);
+            this.Application.DocumentOpen +=
+            new Word.ApplicationEvents4_DocumentOpenEventHandler(SelectExistingXMLPart);
 
             ((Word.ApplicationEvents4_Event)this.Application).NewDocument +=
-                new Word.ApplicationEvents4_NewDocumentEventHandler(setCurrentDocument);
-            this.Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(setCurrentDocument);
+                new Word.ApplicationEvents4_NewDocumentEventHandler(SetCurrentDocument);
+
+            this.Application.WindowActivate += new Word.ApplicationEvents4_WindowActivateEventHandler(SetCurrentDocument);
+            this.Application.DocumentBeforeClose += new Word.ApplicationEvents4_DocumentBeforeCloseEventHandler(DocumentBeforeClose);
         }
         
 
@@ -132,6 +157,7 @@ namespace XMLReader_Add_In
         {
             this.Startup += new System.EventHandler(ThisAddIn_Startup);
             this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
+            
         }
         
         #endregion

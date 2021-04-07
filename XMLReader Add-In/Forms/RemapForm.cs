@@ -25,6 +25,8 @@ namespace XMLReader_Add_In.Forms
         {
             selectedCC = _cc;
             InitializeComponent();
+            this.TopMost = true;
+
             Populate_customXMLComboBox();
 
             customXMLPart = ((ComboBoxItem)customXMLComboBox.Items[0]).Tag as CustomXMLPart;
@@ -64,7 +66,6 @@ namespace XMLReader_Add_In.Forms
 
         private void Populate_customXMLPartTreeView(CustomXMLPart _customXMLPart)
         {
-            System.Diagnostics.Debug.WriteLine($"Selexcted nodes count: {_customXMLPart.SelectNodes("/*").Count}");
             XDocument XDoc = XDocument.Parse(_customXMLPart.XML);
             //Initialize the root of treeview
             TreeNode RootNode = new TreeNode();
@@ -80,7 +81,10 @@ namespace XMLReader_Add_In.Forms
             RootNode.Text = customXMLNode.BaseName;
             RootNode.Tag = customXMLNode;
             customXMLPartTreeView.Nodes.Add(RootNode);
+            customXMLPartTreeView.BeginUpdate();
             XMLHandler.BuildNodes(RootNode, customXMLNode);
+            customXMLPartTreeView.EndUpdate();
+            
         }
 
         #region Events in Remap Form
@@ -101,17 +105,23 @@ namespace XMLReader_Add_In.Forms
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void RemapButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(selectedCC.Title);
-
+            
             if(selectedNode != null)
             {
                 selectedCC.XMLMapping.SetMappingByNode(selectedNode);
             } else
             {
-                MessageBox.Show("Please select a node from the xml treeview");
+                MessageBox.Show("Please select a node from the xml treeview.");
             }
+            if (Globals.ThisAddIn.XMLBrowserForm != null)
+            {
+                XMLBrowserForm f = (XMLBrowserForm)Globals.ThisAddIn.XMLBrowserForm;
+                f.InitializeContentControlListView();
+            }
+
+
             this.Close();
         }
 

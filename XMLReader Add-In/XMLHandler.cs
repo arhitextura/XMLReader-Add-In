@@ -63,11 +63,13 @@ namespace XMLReader_Add_In
                 //If it is a CDATA Type must be some sort of a value inside that node and will not have any childs
                 childTreeNode.Text = _customXmlNode.NodeValue;
                 childTreeNode.Tag = _customXmlNode.ParentNode;
+                childTreeNode.ExpandAll();
                 
             } else if (_customXmlNode.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeElement)
             {
                 childTreeNode.Text = _customXmlNode.BaseName;
                 childTreeNode.Tag = _customXmlNode;
+                childTreeNode.ExpandAll();
             }
             
             foreach (CustomXMLNode item in _customXmlNode.ChildNodes)

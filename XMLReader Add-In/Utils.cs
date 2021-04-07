@@ -12,7 +12,6 @@ namespace XMLReader_Add_In
 {
     public class Utils
     {
-        //TODO override for custom xml node
        
         public static string ReturnXPath(XElement el)
         {
@@ -26,10 +25,6 @@ namespace XMLReader_Add_In
             }
             pathString += el.Name.LocalName;
             return pathString;
-        }
-        public static string ReturnXPath(CustomXMLNode node)
-        {
-            return node.XPath;
         }
 
     }

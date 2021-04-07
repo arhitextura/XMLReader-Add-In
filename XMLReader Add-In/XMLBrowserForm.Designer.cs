@@ -44,6 +44,7 @@ namespace XMLReader_Add_In
             this.mappingHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ccListView_ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ccRemapMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentControlValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             XMLDescription = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -70,7 +71,7 @@ namespace XMLReader_Add_In
             this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(266, 526);
+            this.treeView1.Size = new System.Drawing.Size(437, 526);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -111,7 +112,7 @@ namespace XMLReader_Add_In
             this.ListViewXMLParts.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.ListViewXMLParts.Location = new System.Drawing.Point(0, 0);
             this.ListViewXMLParts.Name = "ListViewXMLParts";
-            this.ListViewXMLParts.Size = new System.Drawing.Size(291, 526);
+            this.ListViewXMLParts.Size = new System.Drawing.Size(484, 526);
             this.ListViewXMLParts.TabIndex = 5;
             this.ListViewXMLParts.TileSize = new System.Drawing.Size(50, 50);
             this.ListViewXMLParts.UseCompatibleStateImageBehavior = false;
@@ -147,8 +148,8 @@ namespace XMLReader_Add_In
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.ListViewXMLParts);
-            this.splitContainer1.Size = new System.Drawing.Size(573, 526);
-            this.splitContainer1.SplitterDistance = 269;
+            this.splitContainer1.Size = new System.Drawing.Size(939, 526);
+            this.splitContainer1.SplitterDistance = 440;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 6;
             // 
@@ -158,11 +159,12 @@ namespace XMLReader_Add_In
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ccListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.contentControlHeader,
-            this.mappingHeader});
+            this.mappingHeader,
+            this.contentControlValue});
             this.ccListView.FullRowSelect = true;
             this.ccListView.GridLines = true;
             this.ccListView.HideSelection = false;
-            this.ccListView.Location = new System.Drawing.Point(591, 74);
+            this.ccListView.Location = new System.Drawing.Point(957, 74);
             this.ccListView.Name = "ccListView";
             this.ccListView.Size = new System.Drawing.Size(455, 526);
             this.ccListView.TabIndex = 7;
@@ -177,7 +179,7 @@ namespace XMLReader_Add_In
             // mappingHeader
             // 
             this.mappingHeader.Text = "Mapping";
-            this.mappingHeader.Width = 344;
+            this.mappingHeader.Width = 84;
             // 
             // ccListView_ContextMenuStrip
             // 
@@ -204,12 +206,17 @@ namespace XMLReader_Add_In
             this.ccRemapMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.ccRemapMenuItem.Click += new System.EventHandler(this.ccRemapMenuItem_Click);
             // 
+            // contentControlValue
+            // 
+            this.contentControlValue.Text = "Value";
+            this.contentControlValue.Width = 253;
+            // 
             // XMLBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1058, 612);
+            this.ClientSize = new System.Drawing.Size(1424, 612);
             this.Controls.Add(this.ccListView);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.InsertContentControlButton);
@@ -243,5 +250,6 @@ namespace XMLReader_Add_In
         private System.Windows.Forms.ColumnHeader mappingHeader;
         private System.Windows.Forms.ContextMenuStrip ccListView_ContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem ccRemapMenuItem;
+        private System.Windows.Forms.ColumnHeader contentControlValue;
     }
 }

@@ -30,7 +30,7 @@ namespace XMLReader_Add_In.Forms
         private void InitializeComponent()
         {
             this.customXMLPartTreeView = new System.Windows.Forms.TreeView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.RemapButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.customXMLComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
@@ -43,15 +43,15 @@ namespace XMLReader_Add_In.Forms
             this.customXMLPartTreeView.TabIndex = 0;
             this.customXMLPartTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.CustomXMLPartTreeView_AfterSelect);
             // 
-            // button1
+            // RemapButton
             // 
-            this.button1.Location = new System.Drawing.Point(12, 521);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Remap";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.RemapButton.Location = new System.Drawing.Point(12, 521);
+            this.RemapButton.Name = "RemapButton";
+            this.RemapButton.Size = new System.Drawing.Size(75, 23);
+            this.RemapButton.TabIndex = 1;
+            this.RemapButton.Text = "Remap";
+            this.RemapButton.UseVisualStyleBackColor = true;
+            this.RemapButton.Click += new System.EventHandler(this.RemapButton_Click);
             // 
             // button2
             // 
@@ -79,7 +79,7 @@ namespace XMLReader_Add_In.Forms
             this.ClientSize = new System.Drawing.Size(289, 556);
             this.Controls.Add(this.customXMLComboBox);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.RemapButton);
             this.Controls.Add(this.customXMLPartTreeView);
             this.Name = "RemapForm";
             this.Text = "Remap ...";
@@ -90,7 +90,7 @@ namespace XMLReader_Add_In.Forms
         #endregion
 
         private System.Windows.Forms.TreeView customXMLPartTreeView;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button RemapButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox customXMLComboBox;
     }
