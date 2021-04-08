@@ -101,50 +101,40 @@ namespace XMLReader_Add_In
                     Debug.WriteLine(node.NodeValue);
                 }
             }
-            //XElement XMLRoot = Globals.ThisAddIn.XML_ProjectInfo.Root;
-            //IEnumerable<XElement> UIKeys = XMLRoot.Descendants("UIKey");
-
-            //foreach (XElement UIKey in UIKeys)
-            //{
-
-            //    ListViewItem UIKeyItem = new ListViewItem(UIKey.Value);
-            //    XElement keyValueElement = UIKey.Parent.Element("value");
-
-            //    UIKeyItem.SubItems.Add(keyValueElement.Value);
-            //    UIKeyItem.Tag = keyValueElement;
-            //    UIKeyItem.SubItems.Add(UIKeyItem.Tag.ToString());
-            //    ListViewXMLParts.Items.Add(UIKeyItem);
-
-            //}
         }
 
-        /// <summary>
-        /// Populates a Treeview with a given initial TreeNode
-        /// </summary>
-        /// <param name="treeNode">A tree node that is already created, ussualy a Root node </param>
-        /// <param name="element">An XEleement which contains children, ussualy a Root XML element</param>
-        private void BuildNodes(TreeNode treeNode, XElement element)
+        //TODO Fix The lsiting
+        private void AddListViewItemsFromXML(CustomXMLNode _customXMLNode)
         {
-            foreach (XElement child in element.Elements())
+            ListViewItem ListViewItem = new ListViewItem();
+
+            if (_customXMLNode.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeCData)
             {
-                TreeNode childTreeNode = new TreeNode();
-                childTreeNode.Tag = child;
-                if (child.Name.ToString().StartsWith("Fix") || child.Name.ToString().StartsWith("Custom"))
-                {
-                    childTreeNode.Text = child.Element("UIKey").Value.ToString();
-                }
-                else if (child.Name.ToString() == "UIKey")
-                {
-                    childTreeNode.Text = child.Value.ToString();
-                }
-                else
-                {
-                    childTreeNode.Text = child.Name.ToString();
-                }
-                treeNode.Nodes.Add(childTreeNode);
-                BuildNodes(childTreeNode, child);
+                //If it is a CDATA Type must be some sort of a value inside that node and will not have any childs
+                ListViewItem.Text = _customXMLNode.NodeValue;
+                ListViewItem.Tag = _customXMLNode.ParentNode;
             }
+            else if (_customXMLNode.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeElement)
+            {
+                ListViewItem.Text = _customXMLNode.BaseName;
+                ListViewItem.Tag = _customXMLNode;
+            }
+
+            foreach (CustomXMLNode node in _customXMLNode.ChildNodes)
+            {
+                if (node.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeText)
+                {
+                    Debug.WriteLine($"NodeType: {node.Text.Replace(" ", "|")} = {node.NodeType}");
+                    continue;
+                }
+                ListViewItem.Text = node.BaseName;
+                ListViewItem.SubItems.Add(node.Text);
+                ListViewItem.Tag = node;
+                AddListViewItemsFromXML(node);
+            }
+            ListViewXMLParts.Items.Add(ListViewItem);
         }
+
 
         private void InsertContentControl()
         {
@@ -262,7 +252,13 @@ namespace XMLReader_Add_In
 
         private void customXMLPartsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            ListViewXMLParts.Items.Clear();
+            if (customXMLPartsComboBox.SelectedItem != null)
+            {
+                CustomXMLPart customXMLPart = ((System.Windows.Controls.ComboBoxItem)customXMLPartsComboBox.SelectedItem).Tag as CustomXMLPart;
+                CustomXMLNode node = customXMLPart.SelectSingleNode("/*");
+                AddListViewItemsFromXML(node);
+            }
         }
     }
 }

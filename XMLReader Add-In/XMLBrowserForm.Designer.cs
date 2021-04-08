@@ -42,7 +42,6 @@ namespace XMLReader_Add_In
             this.ListViewXMLParts = new System.Windows.Forms.ListView();
             this.columnNameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnValueHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnTagHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.customXMLPartsComboBox = new System.Windows.Forms.ComboBox();
             XMLDescription = new System.Windows.Forms.Label();
@@ -97,7 +96,7 @@ namespace XMLReader_Add_In
             this.ccListView.HideSelection = false;
             this.ccListView.Location = new System.Drawing.Point(3, 3);
             this.ccListView.Name = "ccListView";
-            this.ccListView.Size = new System.Drawing.Size(733, 520);
+            this.ccListView.Size = new System.Drawing.Size(731, 520);
             this.ccListView.TabIndex = 7;
             this.ccListView.UseCompatibleStateImageBehavior = false;
             this.ccListView.View = System.Windows.Forms.View.Details;
@@ -150,8 +149,7 @@ namespace XMLReader_Add_In
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ListViewXMLParts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnNameHeader,
-            this.columnValueHeader,
-            this.columnTagHeader});
+            this.columnValueHeader});
             this.ListViewXMLParts.FullRowSelect = true;
             this.ListViewXMLParts.GridLines = true;
             this.ListViewXMLParts.HideSelection = false;
@@ -167,17 +165,12 @@ namespace XMLReader_Add_In
             // columnNameHeader
             // 
             this.columnNameHeader.Text = "Parameter name";
-            this.columnNameHeader.Width = 115;
+            this.columnNameHeader.Width = 176;
             // 
             // columnValueHeader
             // 
             this.columnValueHeader.Text = "Value";
-            this.columnValueHeader.Width = 127;
-            // 
-            // columnTagHeader
-            // 
-            this.columnTagHeader.Text = "Tag";
-            this.columnTagHeader.Width = 172;
+            this.columnValueHeader.Width = 492;
             // 
             // splitContainer1
             // 
@@ -249,7 +242,6 @@ namespace XMLReader_Add_In
         private System.Windows.Forms.ListView ListViewXMLParts;
         private System.Windows.Forms.ColumnHeader columnNameHeader;
         private System.Windows.Forms.ColumnHeader columnValueHeader;
-        private System.Windows.Forms.ColumnHeader columnTagHeader;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ComboBox customXMLPartsComboBox;
     }
