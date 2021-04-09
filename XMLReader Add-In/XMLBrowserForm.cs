@@ -21,19 +21,18 @@ namespace XMLReader_Add_In
 
         #region Variables
         Document extendedDocument = Globals.Factory.GetVstoObject(Globals.ThisAddIn.currentDocument);
-        
+        Forms.FloatingSearchBar searchBar;
         #endregion
 
         public XMLBrowserForm()
         {
 
             InitializeComponent();
-            InitializeListView();
             InitializeContentControlListView();
             XMLHandler.Populate_customXMLComboBoxWithCustomXMLParts(this.customXMLPartsComboBox);
-            this.TopMost = true;
-
-            ListViewXMLParts.MouseUp += new MouseEventHandler(ListViewXMLParts_MouseEvent);
+            InitializeCustomXML_treeView();
+            Initialize_isOnTop_CheckBox();
+            
             extendedDocument.ActivateEvent += new WindowEventHandler(ThisDocument_ActivateEvent);
             ccListView.SelectedIndexChanged += new System.EventHandler(ccListView_SelectedIndexChanged);
             ccListView.MouseUp += new MouseEventHandler(ccListView_MouseEvent);
@@ -43,8 +42,31 @@ namespace XMLReader_Add_In
             this.Activated += new EventHandler(XMLBrowserFormActivate);
         }
 
+       
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.Space))
+            {
+                searchBar = new FloatingSearchBar();
+                
+                searchBar.Show();
+                //MessageBox.Show("What the Ctrl+F?");
 
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
+        private void Initialize_isOnTop_CheckBox()
+        {
+            if (this.TopMost)
+            {
+                isOnTop_CheckBox.Checked = true;
+            } else
+            {
+                isOnTop_CheckBox.Checked = false;
+            }
+        }
         public void InitializeContentControlListView()
         {
 
@@ -81,52 +103,20 @@ namespace XMLReader_Add_In
             }
 
         }
-
-        /// <summary>
-        /// Populates the ListViewXMLParts
-        /// </summary>
-        private void InitializeListView()
+        public void InitializeCustomXML_treeView()
         {
-            CustomXMLPart xmlPart = Globals.ThisAddIn.existingprojectInfoXmlPart;
-            if (xmlPart != null)
+            customXML_treeView.Nodes.Clear();
+            customXML_treeView.Nodes.Add(new TreeNode("Root"));
+            TreeNode root = customXML_treeView.Nodes[0];
+            Debug.WriteLine(root.Text);
+            if(customXMLPartsComboBox.SelectedItem != null)
             {
-                foreach (CustomXMLNode node in xmlPart.SelectNodes("/*"))
-                {
-                    if (node.NodeType != MsoCustomXMLNodeType.msoCustomXMLNodeText)
-                    {
-                        continue;
-                    }
-                    ListViewItem ListViewItem = new ListViewItem(node.NodeValue);
-                    ListViewXMLParts.Items.Add(ListViewItem);
-                    Debug.WriteLine(node.NodeValue);
-                }
+                CustomXMLPart customPart = ((System.Windows.Controls.ComboBoxItem)customXMLPartsComboBox.SelectedItem).Tag as CustomXMLPart;
+                CustomXMLNode customNode = customPart.SelectSingleNode("/*");
+                XMLHandler.BuildNodes(root, customNode);
             }
         }
-
-        //TODO Fix The lsiting 
-        //URGENT Fix this fast
-        private void AddListViewItemsFromXML(CustomXMLNode _customXMLNode)
-        {
-            ListViewItem lsvItem = new ListViewItem();
-
-            foreach (CustomXMLNode node in _customXMLNode.ChildNodes)
-            {
-                if (node.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeText) continue;
-
-                if (node.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeCData ||
-                    node.HasChildNodes() == false)
-                {
-                    //If it is a CDATA Type must be some sort of a value inside that node and will not have any childs
-                    lsvItem.Text = node.ParentNode.BaseName;
-                    lsvItem.SubItems.Add(node.NodeValue);
-                    lsvItem.Tag = node.ParentNode;
-                }
-                AddListViewItemsFromXML(node);
-            }
-            if (_customXMLNode.NodeType != MsoCustomXMLNodeType.msoCustomXMLNodeText) ListViewXMLParts.Items.Add(lsvItem);
-
-        }
-
+        
 
         private void InsertContentControl()
         {
@@ -149,7 +139,6 @@ namespace XMLReader_Add_In
         #region Events Handlers
         private void XMLBrowserFormActivate(object sender, EventArgs e)
         {
-            InitializeListView();
             InitializeContentControlListView();
             XMLHandler.Populate_customXMLComboBoxWithCustomXMLParts(this.customXMLPartsComboBox);
         }
@@ -204,34 +193,14 @@ namespace XMLReader_Add_In
         {
 
         }
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-
-            switch (e.Action)
-            {
-                case TreeViewAction.ByMouse:
-
-                    XElement selectedNodeTagElement = e.Node.Tag as XElement;
-
-                    XMLNodeValueLabel.Text = Utils.ReturnXPath(selectedNodeTagElement);
-                    break;
-            }
-        }
+        
 
         private void InsertContentControlButton_Click(object sender, System.EventArgs ev)
         {
             InsertContentControl();
         }
-        private void ListViewXMLParts_MouseEvent(object sender, MouseEventArgs e)
-        {
-
-            Debug.WriteLine($"Mouse button {e.Button} pressed");
-            // Reset the label text.
-            XMLNodeValueLabel.Text = "None";
-        }
 
 
-        #endregion
 
         private void ccRemapMenuItem_Click(object sender, EventArgs e)
         {
@@ -244,13 +213,25 @@ namespace XMLReader_Add_In
 
         private void customXMLPartsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ListViewXMLParts.Items.Clear();
             if (customXMLPartsComboBox.SelectedItem != null)
             {
-                CustomXMLPart customXMLPart = ((System.Windows.Controls.ComboBoxItem)customXMLPartsComboBox.SelectedItem).Tag as CustomXMLPart;
-                CustomXMLNode node = customXMLPart.SelectSingleNode("/*");
-                AddListViewItemsFromXML(node);
+                InitializeCustomXML_treeView();
             }
         }
+
+        private void isOnTop_CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if(isOnTop_CheckBox.Checked == true)
+            {
+                this.TopMost = true;
+            } else
+            {
+                this.TopMost = false;
+            }
+            
+        }
+        #endregion
     }
+
+
 }

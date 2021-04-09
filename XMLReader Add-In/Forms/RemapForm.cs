@@ -35,27 +35,6 @@ namespace XMLReader_Add_In.Forms
 
 
 
-        private void Populate_customXMLPartTreeView(XDocument XDoc)
-        {
-            TreeNode RootNode = new TreeNode();
-            RootNode.Text = XDoc.Root.Name.LocalName;
-            RootNode.Tag = XDoc.Root;
-            customXMLPartTreeView.Nodes.Add(RootNode);
-            //Build the TreeView
-            XMLHandler.BuildNodes(RootNode, XDoc.Root);
-        }
-
-        private void Populate_customXMLPartTreeView(CustomXMLPart _customXMLPart)
-        {
-            XDocument XDoc = XDocument.Parse(_customXMLPart.XML);
-            //Initialize the root of treeview
-            TreeNode RootNode = new TreeNode();
-            RootNode.Text = XDoc.Root.Name.LocalName;
-            RootNode.Tag = XDoc.Root;
-            customXMLPartTreeView.Nodes.Add(RootNode);
-            //Build the TreeView
-            XMLHandler.BuildNodes(RootNode, XDoc.Root);
-        }
         private void Populate_customXMLPartTreeView(CustomXMLNode customXMLNode)
         {
             TreeNode RootNode = new TreeNode();

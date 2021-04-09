@@ -29,9 +29,8 @@ namespace XMLReader_Add_In
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label XMLDescription;
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Root");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(XMLBrowserForm));
-            this.XMLNodeValueLabel = new System.Windows.Forms.Label();
             this.InsertContentControlButton = new System.Windows.Forms.Button();
             this.ccListView = new System.Windows.Forms.ListView();
             this.contentControlHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -39,12 +38,10 @@ namespace XMLReader_Add_In
             this.contentControlValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ccListView_ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ccRemapMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ListViewXMLParts = new System.Windows.Forms.ListView();
-            this.columnNameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnValueHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.customXML_treeView = new System.Windows.Forms.TreeView();
             this.customXMLPartsComboBox = new System.Windows.Forms.ComboBox();
-            XMLDescription = new System.Windows.Forms.Label();
+            this.isOnTop_CheckBox = new System.Windows.Forms.CheckBox();
             this.ccListView_ContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -52,29 +49,9 @@ namespace XMLReader_Add_In
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // XMLDescription
-            // 
-            XMLDescription.AutoSize = true;
-            XMLDescription.Font = new System.Drawing.Font("Montserrat", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            XMLDescription.Location = new System.Drawing.Point(12, 9);
-            XMLDescription.Name = "XMLDescription";
-            XMLDescription.Size = new System.Drawing.Size(126, 18);
-            XMLDescription.TabIndex = 2;
-            XMLDescription.Text = "Project Info XML ...";
-            // 
-            // XMLNodeValueLabel
-            // 
-            this.XMLNodeValueLabel.AutoSize = true;
-            this.XMLNodeValueLabel.Font = new System.Drawing.Font("Montserrat", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.XMLNodeValueLabel.Location = new System.Drawing.Point(180, 47);
-            this.XMLNodeValueLabel.Name = "XMLNodeValueLabel";
-            this.XMLNodeValueLabel.Size = new System.Drawing.Size(173, 18);
-            this.XMLNodeValueLabel.TabIndex = 3;
-            this.XMLNodeValueLabel.Text = "Valoare preluata din XML";
-            // 
             // InsertContentControlButton
             // 
-            this.InsertContentControlButton.Location = new System.Drawing.Point(12, 45);
+            this.InsertContentControlButton.Location = new System.Drawing.Point(12, 12);
             this.InsertContentControlButton.Name = "InsertContentControlButton";
             this.InsertContentControlButton.Size = new System.Drawing.Size(162, 23);
             this.InsertContentControlButton.TabIndex = 4;
@@ -96,7 +73,7 @@ namespace XMLReader_Add_In
             this.ccListView.HideSelection = false;
             this.ccListView.Location = new System.Drawing.Point(3, 3);
             this.ccListView.Name = "ccListView";
-            this.ccListView.Size = new System.Drawing.Size(731, 520);
+            this.ccListView.Size = new System.Drawing.Size(725, 553);
             this.ccListView.TabIndex = 7;
             this.ccListView.UseCompatibleStateImageBehavior = false;
             this.ccListView.View = System.Windows.Forms.View.Details;
@@ -141,57 +118,40 @@ namespace XMLReader_Add_In
             this.ccRemapMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.ccRemapMenuItem.Click += new System.EventHandler(this.ccRemapMenuItem_Click);
             // 
-            // ListViewXMLParts
-            // 
-            this.ListViewXMLParts.AllowDrop = true;
-            this.ListViewXMLParts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ListViewXMLParts.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnNameHeader,
-            this.columnValueHeader});
-            this.ListViewXMLParts.FullRowSelect = true;
-            this.ListViewXMLParts.GridLines = true;
-            this.ListViewXMLParts.HideSelection = false;
-            this.ListViewXMLParts.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.ListViewXMLParts.Location = new System.Drawing.Point(0, 33);
-            this.ListViewXMLParts.Name = "ListViewXMLParts";
-            this.ListViewXMLParts.Size = new System.Drawing.Size(650, 490);
-            this.ListViewXMLParts.TabIndex = 5;
-            this.ListViewXMLParts.TileSize = new System.Drawing.Size(50, 50);
-            this.ListViewXMLParts.UseCompatibleStateImageBehavior = false;
-            this.ListViewXMLParts.View = System.Windows.Forms.View.Details;
-            // 
-            // columnNameHeader
-            // 
-            this.columnNameHeader.Text = "Parameter name";
-            this.columnNameHeader.Width = 176;
-            // 
-            // columnValueHeader
-            // 
-            this.columnValueHeader.Text = "Value";
-            this.columnValueHeader.Width = 492;
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(12, 74);
+            this.splitContainer1.Location = new System.Drawing.Point(12, 41);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.customXML_treeView);
             this.splitContainer1.Panel1.Controls.Add(this.customXMLPartsComboBox);
-            this.splitContainer1.Panel1.Controls.Add(this.ListViewXMLParts);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.ccListView);
-            this.splitContainer1.Size = new System.Drawing.Size(1400, 526);
+            this.splitContainer1.Size = new System.Drawing.Size(1400, 559);
             this.splitContainer1.SplitterDistance = 653;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 6;
+            // 
+            // customXML_treeView
+            // 
+            this.customXML_treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.customXML_treeView.Location = new System.Drawing.Point(3, 33);
+            this.customXML_treeView.Name = "customXML_treeView";
+            treeNode1.Name = "Root";
+            treeNode1.Text = "Root";
+            this.customXML_treeView.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.customXML_treeView.Size = new System.Drawing.Size(647, 523);
+            this.customXML_treeView.TabIndex = 7;
             // 
             // customXMLPartsComboBox
             // 
@@ -207,19 +167,32 @@ namespace XMLReader_Add_In
             this.customXMLPartsComboBox.TabIndex = 6;
             this.customXMLPartsComboBox.SelectedIndexChanged += new System.EventHandler(this.customXMLPartsComboBox_SelectedIndexChanged);
             // 
+            // isOnTop_CheckBox
+            // 
+            this.isOnTop_CheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.isOnTop_CheckBox.AutoSize = true;
+            this.isOnTop_CheckBox.Location = new System.Drawing.Point(1320, 12);
+            this.isOnTop_CheckBox.Name = "isOnTop_CheckBox";
+            this.isOnTop_CheckBox.Size = new System.Drawing.Size(92, 17);
+            this.isOnTop_CheckBox.TabIndex = 7;
+            this.isOnTop_CheckBox.Text = "Always on top";
+            this.isOnTop_CheckBox.UseVisualStyleBackColor = true;
+            this.isOnTop_CheckBox.CheckedChanged += new System.EventHandler(this.isOnTop_CheckBox_CheckedChanged);
+            // 
             // XMLBrowserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1424, 612);
+            this.Controls.Add(this.isOnTop_CheckBox);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.InsertContentControlButton);
-            this.Controls.Add(this.XMLNodeValueLabel);
-            this.Controls.Add(XMLDescription);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "XMLBrowserForm";
             this.Text = "XML Browser";
+            this.TopMost = true;
             this.ccListView_ContextMenuStrip.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -231,7 +204,6 @@ namespace XMLReader_Add_In
         }
 
         #endregion
-        private System.Windows.Forms.Label XMLNodeValueLabel;
         private System.Windows.Forms.Button InsertContentControlButton;
         private System.Windows.Forms.ListView ccListView;
         private System.Windows.Forms.ColumnHeader contentControlHeader;
@@ -239,10 +211,9 @@ namespace XMLReader_Add_In
         private System.Windows.Forms.ContextMenuStrip ccListView_ContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem ccRemapMenuItem;
         private System.Windows.Forms.ColumnHeader contentControlValue;
-        private System.Windows.Forms.ListView ListViewXMLParts;
-        private System.Windows.Forms.ColumnHeader columnNameHeader;
-        private System.Windows.Forms.ColumnHeader columnValueHeader;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ComboBox customXMLPartsComboBox;
+        private System.Windows.Forms.CheckBox isOnTop_CheckBox;
+        private System.Windows.Forms.TreeView customXML_treeView;
     }
 }
