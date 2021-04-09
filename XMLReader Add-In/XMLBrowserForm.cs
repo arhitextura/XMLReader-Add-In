@@ -103,36 +103,28 @@ namespace XMLReader_Add_In
             }
         }
 
-        //TODO Fix The lsiting
+        //TODO Fix The lsiting 
+        //URGENT Fix this fast
         private void AddListViewItemsFromXML(CustomXMLNode _customXMLNode)
         {
-            ListViewItem ListViewItem = new ListViewItem();
-
-            if (_customXMLNode.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeCData)
-            {
-                //If it is a CDATA Type must be some sort of a value inside that node and will not have any childs
-                ListViewItem.Text = _customXMLNode.NodeValue;
-                ListViewItem.Tag = _customXMLNode.ParentNode;
-            }
-            else if (_customXMLNode.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeElement)
-            {
-                ListViewItem.Text = _customXMLNode.BaseName;
-                ListViewItem.Tag = _customXMLNode;
-            }
+            ListViewItem lsvItem = new ListViewItem();
 
             foreach (CustomXMLNode node in _customXMLNode.ChildNodes)
             {
-                if (node.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeText)
+                if (node.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeText) continue;
+
+                if (node.NodeType == MsoCustomXMLNodeType.msoCustomXMLNodeCData ||
+                    node.HasChildNodes() == false)
                 {
-                    Debug.WriteLine($"NodeType: {node.Text.Replace(" ", "|")} = {node.NodeType}");
-                    continue;
+                    //If it is a CDATA Type must be some sort of a value inside that node and will not have any childs
+                    lsvItem.Text = node.ParentNode.BaseName;
+                    lsvItem.SubItems.Add(node.NodeValue);
+                    lsvItem.Tag = node.ParentNode;
                 }
-                ListViewItem.Text = node.BaseName;
-                ListViewItem.SubItems.Add(node.Text);
-                ListViewItem.Tag = node;
                 AddListViewItemsFromXML(node);
             }
-            ListViewXMLParts.Items.Add(ListViewItem);
+            if (_customXMLNode.NodeType != MsoCustomXMLNodeType.msoCustomXMLNodeText) ListViewXMLParts.Items.Add(lsvItem);
+
         }
 
 
