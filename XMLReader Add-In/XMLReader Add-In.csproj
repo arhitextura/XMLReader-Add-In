@@ -209,6 +209,9 @@
     <Compile Include="Forms\RemapForm.Designer.cs">
       <DependentUpon>RemapForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\WPFSearchBar.xaml.cs">
+      <DependentUpon>WPFSearchBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -303,6 +306,12 @@
   <ItemGroup>
     <Folder Include="Classes\" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="Forms\WPFSearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -315,7 +324,7 @@
     </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>2F52A4CD35A74DCF002338D8BFA2A026ABDB210A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>1080873E64554D1A6FC0C161C7B7BDE2A4329F5C</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>

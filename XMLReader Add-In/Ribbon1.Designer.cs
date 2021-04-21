@@ -39,9 +39,9 @@ namespace XMLReader_Add_In
             this.SettingsGroup = this.Factory.CreateRibbonGroup();
             this.openXMLFileButton = this.Factory.CreateRibbonButton();
             this.nameSpaceManagerButton = this.Factory.CreateRibbonButton();
+            this.button1 = this.Factory.CreateRibbonButton();
             this.AddCustomXMLButton = this.Factory.CreateRibbonButton();
             this.settingsButton = this.Factory.CreateRibbonButton();
-            this.button1 = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.SettingsGroup.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +81,12 @@ namespace XMLReader_Add_In
             this.nameSpaceManagerButton.ShowImage = true;
             this.nameSpaceManagerButton.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.viewCustomXMLParts);
             // 
+            // button1
+            // 
+            this.button1.Label = "button1";
+            this.button1.Name = "button1";
+            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
+            // 
             // AddCustomXMLButton
             // 
             this.AddCustomXMLButton.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
@@ -97,12 +103,6 @@ namespace XMLReader_Add_In
             this.settingsButton.Label = "Settings";
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.ShowImage = true;
-            // 
-            // button1
-            // 
-            this.button1.Label = "button1";
-            this.button1.Name = "button1";
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button1_Click_1);
             // 
             // Ribbon1
             // 

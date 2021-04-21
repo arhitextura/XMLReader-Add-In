@@ -8,6 +8,7 @@ using Word = Microsoft.Office.Interop.Word;
 using Office = Microsoft.Office.Core;
 using Microsoft.VisualStudio.Tools.Applications.Runtime;
 
+
 namespace XMLReader_Add_In
 {
     public partial class ThisAddIn
@@ -114,7 +115,7 @@ namespace XMLReader_Add_In
                 string _customXMLPartID = doc.Variables["XML_ID"].Value;
                 existingprojectInfoXmlPart = doc.CustomXMLParts.SelectByID(_customXMLPartID);
             }
-            catch (Exception Err)
+            catch (Exception)
             {
                 MessageBox.Show("No custom XML Part found that was imported from Archicad.");
                 //throw new KeyNotFoundException("No custom XML part found in this document");
